@@ -27,6 +27,8 @@ public class UserFeed extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        ((main)getActivity()).onFragmentSelected(6,null);
+        if(v == fromUserFeed2ParticularTitle){
+            ((main)getActivity()).onFragmentSelected(6,null);
+        }
     }
 }

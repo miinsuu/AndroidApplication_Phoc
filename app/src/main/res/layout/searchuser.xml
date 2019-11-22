@@ -71,6 +71,7 @@
                     android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/fromSearchUser2UserFeed"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginBottom="10dp"
