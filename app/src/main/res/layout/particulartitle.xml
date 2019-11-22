@@ -63,6 +63,7 @@
                         android:text="짧은 한줄의 작품 소개"
                         android:textSize="17dp" />
                     <TextView
+                        android:id="@+id/fromParticularTitle2UserFeed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
