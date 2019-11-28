@@ -2,6 +2,7 @@ package com.example.phoc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.se.omapi.Session;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,9 +50,12 @@ public class signIn extends AppCompatActivity implements View.OnClickListener{
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        Log.d("EmailPassword", "이미 로그인 ");
+        Log.d("EmailPassword", currentUser.toString());
+        if(MySession.getSession().isLoggedIn()){
+            moveActivity();
+        }
     }
-    private void signIn(String email, String password){
+    private void signIn(final String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -60,6 +64,7 @@ public class signIn extends AppCompatActivity implements View.OnClickListener{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            MySession.getSession().putUserInfo(email);
                             moveActivity();
                         } else {
                             // If sign in fails, display a message to the user.
