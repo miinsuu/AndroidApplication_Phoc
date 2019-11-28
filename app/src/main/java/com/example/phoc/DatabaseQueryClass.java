@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -39,10 +40,28 @@ public class DatabaseQueryClass {
                         dataListener.getData(document.getId());
                     }
                 } else {
-                    Log.d("Post", "Error getting documents: ", task.getException());
+                    Log.d("User", "Error getting documents: ", task.getException());
                 }
             }
         });
+    }
+    public static class Theme{
+        public static void getTodayTheme(final DataListener dataListener){
+            Log.d("Theme", "getTodayTheme called");
+            CollectionReference themeRef = db.collection("themes");
+            themeRef.document("todaytheme")
+                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Log.d("Theme", "get today theme success" );
+                        dataListener.getData(task.getResult().getData());
+                    } else {
+                        Log.d("Post", "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+        }
     }
 
     public static class Post{
