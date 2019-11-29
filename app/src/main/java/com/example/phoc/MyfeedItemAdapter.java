@@ -14,7 +14,7 @@ public class MyfeedItemAdapter extends RecyclerView.Adapter<MyfeedItemAdapter.Vi
     ArrayList<MyfeedItem> items = new ArrayList<MyfeedItem>();
 
     public interface OnItemClickListener{
-        public  void onItemClick(View view, int position);
+        public  void onItemClick(View view, int position, int type);
     }
 
     private OnItemClickListener onItemClickListener;
@@ -38,7 +38,8 @@ public class MyfeedItemAdapter extends RecyclerView.Adapter<MyfeedItemAdapter.Vi
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onItemClick(v, position);
+                //viewType1은 TextView인 title
+                onItemClickListener.onItemClick(v, position, 1);
             }
         });
         MyfeedItem item = items.get(position);

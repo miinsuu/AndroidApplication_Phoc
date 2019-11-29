@@ -24,8 +24,10 @@ public class Myfeed extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         final MyfeedItemAdapter adapter = new MyfeedItemAdapter(new MyfeedItemAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                ((main)getActivity()).onFragmentSelected(6,null);
+            public void onItemClick(View view, int position, int viewType) {
+                if(viewType == 1) { //viewType1은 TextView인 title
+                    ((main) getActivity()).onFragmentSelected(6, null);
+                }
             }
         });
 
