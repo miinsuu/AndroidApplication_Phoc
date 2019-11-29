@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
 import com.example.phoc.listView.FeedItem;
 import com.example.phoc.listView.FeedItemAdapter;
 
@@ -28,6 +30,12 @@ public class Myfeed extends Fragment{
         FeedItemAdapter adapter = new FeedItemAdapter(getContext());
         String imgUrl = "https://firebasestorage.googleapis.com/v0/b/phoc-50746.appspot.com/o/images%2Fgit-flow_overall_graph.png?alt=media&token=385b0b45-846c-4f9a-a03f-837f4249e37e";
 
+        DatabaseQueryClass.Post.getPostsByUserId(MySession.getSession().getUserId(), new DataListener() {
+            @Override
+            public void getData(Object data) {
+
+            }
+        });
         adapter.addItem(new FeedItem("가을","가을 날씨가 좋더라고요","2019-11-29", imgUrl));
         adapter.addItem(new FeedItem("완성","드디어되네 씌바거","2019-11-29", imgUrl));
         adapter.addItem(new FeedItem("최지웅","짱","2019-11-29", imgUrl));

@@ -15,8 +15,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,16 +95,24 @@ public class DatabaseQueryClass {
                 @Override
                 public void getData(Object userId) {
                     CollectionReference postRef = db.collection("posts");
-                    Query query = postRef.whereEqualTo("followerId", userId);
+                    Query query = postRef.whereEqualTo("userId", userId);
 
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            ArrayList<JsonObject> dataList = new ArrayList<JsonObject>();
+
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d("Post", document.getId() + " => " + document.getData());
-                                    dataListener.getData(task.getResult());
+
+                                    String json = new Gson().toJson(document.getData());
+                                    JsonElement element = new JsonParser().parse(json);
+                                    JsonObject jobj = element.getAsJsonObject();
+
+                                    dataList.add(jobj);
                                 }
+                                dataListener.getData(dataList);
                             } else {
                                 Log.d("Post", "Error getting documents: ", task.getException());
                             }
@@ -108,6 +121,26 @@ public class DatabaseQueryClass {
                 }
             });
         }
+        public static void getPostsByUserId(String userId, final DataListener dataListener){
+            Log.d("Post", "by userId called");
+            CollectionReference postRef = db.collection("posts");
+            Query query = postRef.whereEqualTo("userId", userId);
+            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        //ArrayList<>
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d("Post", document.getId() + " => " + document.getData());
+                            dataListener.getData(document.getData());
+                        }
+                    } else {
+                        Log.d("Post", "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+        }
+
         public static void getPostBySubscribing(String[] subs){
         }
         public static void createPost(final String cameraSettingJson,
@@ -194,6 +227,30 @@ public class DatabaseQueryClass {
                   }
               }
           });
+        }
+        public static void getUserInfoByEmail(String email, final DataListener dataListener){
+            db.collection("users")
+                    .whereEqualTo("email", email)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        String data = null;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String json = new Gson().toJson(document.getData());
+                            JsonElement element = new JsonParser().parse(json);
+                            JsonObject jobj = element.getAsJsonObject();
+                            jobj.addProperty("userId", document.getId().toString());
+
+                            data = new Gson().toJson(jobj);
+                        }
+                        if(data!=null)
+                            dataListener.getData(data);
+                    } else {
+                        Log.d("user", "Error getting documents: ", task.getException());
+                    }
+                }
+            });
         }
     }
 
