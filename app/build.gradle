@@ -18,6 +18,7 @@ android {
         }
     }
 }
+apply plugin: 'com.android.application'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -31,4 +32,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
+
+    implementation 'com.google.firebase:firebase-auth:19.0.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:21.1.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
+    implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
 }
+apply plugin: 'com.google.gms.google-services'
