@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/list"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:text="프리셋 리스트"
+            android:background="@drawable/click"
+            android:textColor="@android:color/white"/>
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:background="@drawable/click"
+            android:textColor="@android:color/white"
+            android:text="프리셋 저장" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/black" />
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextureView
+            android:layout_width="match_parent"
+            android:layout_height="410dp"
+            android:id="@+id/preview" />
+
+        <TextView
+            android:id="@+id/isoInfoText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="64dp"
+            android:textColor="@android:color/white"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:visibility="gone"/>
+        <SeekBar
+            android:id="@+id/isoSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="800"
+            android:progress="100"
+            android:min="100"
+            android:thumb="@drawable/camera_button"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/exposureInfoText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="64dp"
+            android:textColor="@android:color/white"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:visibility="gone"/>
+        <SeekBar
+            android:id="@+id/exposureSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/camera_button"
+            android:layout_gravity="bottom"
+            android:max="2000"
+            android:min="1"
+            android:progress="60"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/wbInfoText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="64dp"
+            android:textColor="@android:color/white"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:visibility="gone"/>
+        <SeekBar
+            android:id="@+id/wbSeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:min="0"
+            android:progress="50"
+            android:thumb="@drawable/camera_button"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <Button
+                android:id="@+id/WB_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WB"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/ISO_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ISO"
+                android:layout_toRightOf="@id/WB_btn"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/exposure_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="셔터스피드"
+                android:layout_toRightOf="@id/ISO_btn"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/flash_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="플래시"
+                android:layout_toRightOf="@id/exposure_btn"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                />
+
+        </RelativeLayout>
+
+
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/camera_button"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btn"
+            />
+
+        <TextView
+            android:id="@+id/main_label"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+    </FrameLayout>
+
+
+</LinearLayout>
