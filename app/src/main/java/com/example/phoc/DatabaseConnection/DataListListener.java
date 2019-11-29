@@ -2,10 +2,8 @@ package com.example.phoc.DatabaseConnection;
 
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
-public interface DataListener {
-    public void getData(Object data);
+public interface DataListListener {
+    public void getData(ArrayList<JsonObject> data);
 }

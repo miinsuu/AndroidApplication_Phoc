@@ -40,8 +40,8 @@ public class FeedItem {
     public void setImgUri(String imgUri) {
         this.imgUri = imgUri;
     }
-
     public String getImgUri() {
-        return imgUri;
+        return this.imgUri;
     }
+
 }

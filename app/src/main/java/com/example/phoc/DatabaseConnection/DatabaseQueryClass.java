@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.phoc.MySession;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -70,7 +71,7 @@ public class DatabaseQueryClass {
     }
 
     public static class Post{
-        public static void getPostsByTheme(String theme, final DataListener dataListener){
+        public static void getPostsByTheme(String theme, final DataListListener dataListener){
             Log.d("Post", "byTheme called");
             CollectionReference postRef = db.collection("posts");
             Query query = postRef.whereEqualTo("theme", theme);
@@ -81,7 +82,7 @@ public class DatabaseQueryClass {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d("Post", document.getId() + " => " + document.getData());
-                            dataListener.getData(task.getResult());
+                          //  dataListener.getData(task.getResult());
                         }
                     } else {
                         Log.d("Post", "Error getting documents: ", task.getException());
@@ -89,7 +90,7 @@ public class DatabaseQueryClass {
                 }
             });
         }
-        public static void getPostsByNickname(String nickname, final DataListener dataListener){
+        public static void getPostsByNickname(String nickname, final DataListListener dataListener){
             Log.d("Post", "by nick called");
             findUserIdByNickname(nickname, new DataListener() {
                 @Override
@@ -121,7 +122,7 @@ public class DatabaseQueryClass {
                 }
             });
         }
-        public static void getPostsByUserId(String userId, final DataListener dataListener){
+        public static void getPostsByUserId(final String userId, final DataListener dataListener){
             Log.d("Post", "by userId called");
             CollectionReference postRef = db.collection("posts");
             Query query = postRef.whereEqualTo("userId", userId);
@@ -129,10 +130,10 @@ public class DatabaseQueryClass {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
-                        //ArrayList<>
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d("Post", document.getId() + " => " + document.getData());
-                            dataListener.getData(document.getData());
+                            String json = new Gson().toJson(document.getData());
+                            dataListener.getData(json);
                         }
                     } else {
                         Log.d("Post", "Error getting documents: ", task.getException());
@@ -155,6 +156,7 @@ public class DatabaseQueryClass {
             post.put("theme", theme);
             post.put("createdAt",  (new Timestamp(new Date().getTime())).toString());
             post.put("num_phoc", 0);
+            post.put("userId", MySession.getSession().getUserId());
             //userId 추가할것
 
             db.collection("posts")
@@ -228,7 +230,7 @@ public class DatabaseQueryClass {
               }
           });
         }
-        public static void getUserInfoByEmail(String email, final DataListener dataListener){
+        public static void getUserInfoByEmail(final String email, final DataListener dataListener){
             db.collection("users")
                     .whereEqualTo("email", email)
                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -240,7 +242,7 @@ public class DatabaseQueryClass {
                             String json = new Gson().toJson(document.getData());
                             JsonElement element = new JsonParser().parse(json);
                             JsonObject jobj = element.getAsJsonObject();
-                            jobj.addProperty("userId", document.getId().toString());
+                            jobj.addProperty("userId", document.getId());
 
                             data = new Gson().toJson(jobj);
                         }

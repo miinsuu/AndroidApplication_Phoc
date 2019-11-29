@@ -1,6 +1,7 @@
 package com.example.phoc.listView;
 
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +64,8 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.ViewHo
             title.setText(item.getTitle());
             comment.setText(item.getComment());
             date.setText(item.getDate());
-
-            Uri uri = Uri.parse(item.imgUri);
+            Log.d("Post", item.getImgUri());
+            Uri uri = Uri.parse(item.getImgUri());
             Glide.with(context).load(uri).into(imgView);
 
         }

@@ -35,7 +35,7 @@ public class MySession {
                 nickname = jobj.get("nick").toString();
                 userId = jobj.get("userId").toString();
 
-                Log.d("session", nickname + userId );
+                Log.d("Post", nickname + " : " +userId );
             }
         });
     }
@@ -46,6 +46,6 @@ public class MySession {
             return false;
     }
     public String getUserId(){
-        return userId;
+        return this.userId;
     }
 }
