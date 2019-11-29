@@ -10,8 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MyfeedItemAdapter extends RecyclerView.Adapter<MyfeedItemAdapter.ViewHolder> {
+public class MyfeedItemAdapter extends RecyclerView.Adapter<MyfeedItemAdapter.ViewHolder>{
     ArrayList<MyfeedItem> items = new ArrayList<MyfeedItem>();
+
+    public interface OnItemClickListener{
+        public  void onItemClick(View view, int position);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public MyfeedItemAdapter(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
 
     @NonNull
     @Override
@@ -23,7 +33,14 @@ public class MyfeedItemAdapter extends RecyclerView.Adapter<MyfeedItemAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
+        MyfeedItemAdapter.ViewHolder holder = (MyfeedItemAdapter.ViewHolder)viewHolder;
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(v, position);
+            }
+        });
         MyfeedItem item = items.get(position);
         viewHolder.setItem(item);
     }

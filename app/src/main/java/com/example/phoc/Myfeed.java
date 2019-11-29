@@ -22,7 +22,12 @@ public class Myfeed extends Fragment{
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        MyfeedItemAdapter adapter = new MyfeedItemAdapter();
+        final MyfeedItemAdapter adapter = new MyfeedItemAdapter(new MyfeedItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ((main)getActivity()).onFragmentSelected(6,null);
+            }
+        });
 
         adapter.addItem(new MyfeedItem("가을","가을 날씨가 좋더라고요","2019-11-29"));
         adapter.addItem(new MyfeedItem("완성","드디어되네 씌바거","2019-11-29"));
