@@ -17,7 +17,6 @@ public class Myfeed extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.myfeed, container, false);
-
         RecyclerView recyclerView = rootView.findViewById(R.id.myFeedRecyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
