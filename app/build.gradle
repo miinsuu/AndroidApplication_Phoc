@@ -18,6 +18,7 @@ android {
         }
     }
 }
+apply plugin: 'com.android.application'
 
 apply plugin: 'com.android.application'
 dependencies {
@@ -42,4 +43,3 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
 }
 apply plugin: 'com.google.gms.google-services'
-

@@ -1,4 +1,4 @@
-package com.example.phoc;
+package com.example.phoc.DatabaseConnection;
 
 import android.util.Log;
 
