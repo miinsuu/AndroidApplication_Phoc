@@ -21,13 +21,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static com.example.camera2.MainActivity.exposure;
-import static com.example.camera2.MainActivity.flash_count;
-import static com.example.camera2.MainActivity.iso;
+import static com.example.phoc.MainActivity.exposure;
+import static com.example.phoc.MainActivity.flash_count;
+import static com.example.phoc.MainActivity.iso;
+
 
 public class CustomDialogConfirm {
 
     private Context context;
+
 
     public CustomDialogConfirm(Context context) {
         this.context = context;
