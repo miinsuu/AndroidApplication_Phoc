@@ -254,6 +254,21 @@ public class DatabaseQueryClass {
                 }
             });
         }
+        public static void findSimilarUserByNickname(String nick, final DataListener dataListener){
+            Log.d("Similar", "findSmilarUser called");
+            db.collection("users").orderBy("nick").startAt().startAt(nick).endAt(nick + "\uf8ff")
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String json = new Gson().toJson(document.getData());
+
+                        dataListener.getData(json);
+                    }
+                }
+            });
+
+        }
     }
 
 

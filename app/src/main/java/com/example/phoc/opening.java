@@ -16,6 +16,7 @@ public class opening extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening);
 
+        MySession.getSession().clearSession();
         startBtn = findViewById(R.id.startBtn);
         startBtn.setOnClickListener(this);
     }

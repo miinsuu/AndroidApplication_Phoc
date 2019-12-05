@@ -33,6 +33,7 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/editText"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
@@ -43,6 +44,7 @@
                     android:layout_gravity="top"/>
 
                 <ImageView
+                    android:id="@+id/searchBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:maxWidth="50dp"

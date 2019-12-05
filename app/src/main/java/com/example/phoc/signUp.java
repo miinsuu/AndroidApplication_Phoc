@@ -61,22 +61,22 @@ public class signUp extends AppCompatActivity implements View.OnClickListener{
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(signUp.this, "Account created.",
-                                    Toast.LENGTH_SHORT).show();
-                            isSingupSuccessed = true;
+                            //FirebaseUser user = mAuth.getCurrentUser();
                             putUserDataToDB(email, nickname);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.d(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(signUp.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            isSingupSuccessed = false;
                         }
                     }
                 });
     }
     private void putUserDataToDB(String email, String nickname){
+
+        Log.d(TAG, "putuserdatatodb called");
+        db = FirebaseFirestore.getInstance();
         Map<String, Object> user = new HashMap<>();
         user.put("email", email);
         user.put("nick", nickname);
@@ -88,6 +88,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener{
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        moveActivity();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -96,7 +97,6 @@ public class signUp extends AppCompatActivity implements View.OnClickListener{
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-
     }
     @Override
     public void onClick(View v) {
@@ -104,7 +104,9 @@ public class signUp extends AppCompatActivity implements View.OnClickListener{
         String password = passwordText.getText().toString();
         String nickname = nickText.getText().toString();
         createAccount(email, password, nickname);
-        if(isSingupSuccessed)
-            startActivity(new Intent(this, signIn.class));
+    }
+    private void moveActivity(){
+        startActivity(new Intent(this, signIn.class));
+
     }
 }

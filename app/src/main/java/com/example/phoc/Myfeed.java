@@ -55,12 +55,6 @@ public class Myfeed extends Fragment{
             }
         });
 
-        //adapter.addItem(new FeedItem("가을","가을 날씨가 좋더라고요","2019-11-29", imgUrl));
-        //adapter.addItem(new FeedItem("완성","드디어되네 씌바거","2019-11-29", imgUrl));
-        //adapter.addItem(new FeedItem("최지웅","짱","2019-11-29", imgUrl));
-
-        //Log.d("Post", "먼져해버렷당게");
-
         return rootView;
     }
     void setAdapterToView(final FeedItemAdapter adapter){
