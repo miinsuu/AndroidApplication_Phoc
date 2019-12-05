@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import com.google.firebase.firestore.Query.Direction;
 
 public class DatabaseQueryClass {
     private static DatabaseQueryClass databaseQuery = new DatabaseQueryClass();
@@ -67,6 +68,26 @@ public class DatabaseQueryClass {
                     }
                 }
             });
+        }
+        public static void getThemes(final DataListener dataListener){
+            Log.d("Theme", "getThemecalled");
+            CollectionReference themeRef = db.collection("themes");
+            themeRef.orderBy("createdAt", Direction.DESCENDING).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String json = new Gson().toJson(document.getData());
+                                    Log.d("Theme", json);
+                                    dataListener.getData(json);
+                                }
+                            } else {
+                                Log.d("Theme", "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
         }
     }
 
