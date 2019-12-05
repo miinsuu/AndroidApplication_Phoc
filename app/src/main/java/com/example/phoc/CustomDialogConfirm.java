@@ -89,8 +89,7 @@ public class CustomDialogConfirm {
                     if(((String)iJson.get("NAME")).equals(name)) //선택한 프리셋 이름과 같은 정보를 찾는다.
                     {
                         //exposure time 추출
-                        double temp = Double.parseDouble((String)iJson.get("TAG_EXPOSURE_TIME")) * 1000000000l;
-                        exposure = (long)temp;
+                        exposure = Long.parseLong((String)iJson.get("TAG_EXPOSURE_TIME"));
                         //ISO 추출
                         iso = Integer.parseInt((String)iJson.get("TAG_ISO_SPEED_RATINGS"));
                         //플래시 여부 추출

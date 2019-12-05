@@ -37,6 +37,7 @@ public class ExifActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             imageview.setImageURI(selectedImageUri);
@@ -48,7 +49,7 @@ public class ExifActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         String UriToString = selectedImageUri.toString();
         intent.putExtra("imageUriString", UriToString); /*송신*/
-
+        intent.putExtra("Exif", "Exif"); //exif값을 가진 카메라로 실행
         startActivity(intent);
     }
 

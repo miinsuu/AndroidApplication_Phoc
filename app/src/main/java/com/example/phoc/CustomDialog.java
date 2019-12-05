@@ -26,6 +26,10 @@ import static android.media.ExifInterface.TAG_FLASH;
 import static android.media.ExifInterface.TAG_ISO_SPEED_RATINGS;
 import static android.media.ExifInterface.TAG_WHITE_BALANCE;
 
+import static com.example.phoc.MainActivity.exposure;
+import static com.example.phoc.MainActivity.flash_count;
+import static com.example.phoc.MainActivity.iso;
+
 public class CustomDialog {
     private Context context;
 
@@ -60,7 +64,7 @@ public class CustomDialog {
                 // 커스텀 다이얼로그에서 입력한 메시지를 대입한다.
                 String name = message.getText().toString();
 
-                saveExif(exif, name);
+                saveExif(name);
 
                 Toast.makeText(context, "설정이 저장되었습니다.", Toast.LENGTH_SHORT).show();
 
@@ -79,7 +83,7 @@ public class CustomDialog {
         });
     }
 
-    private void saveExif(ExifInterface exif, String name) {
+    private void saveExif(String name) {
         File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Pho_C/");
         if (!folder.exists()) {
             folder.mkdirs(); }
@@ -105,13 +109,10 @@ public class CustomDialog {
             JSONObject exifValue = new JSONObject();
             //정보 입력
             exifValue.put("NAME", name);
-            if((exif.getAttribute(TAG_FLASH)).equals("1"))
-                exifValue.put("TAG_FLASH", exif.getAttribute(TAG_FLASH));
-            else
-                exifValue.put("TAG_FLASH", "0");
-            exifValue.put("TAG_WHITE_BALANCE", exif.getAttribute(TAG_WHITE_BALANCE));
-            exifValue.put("TAG_ISO_SPEED_RATINGS", exif.getAttribute(TAG_ISO_SPEED_RATINGS));
-            exifValue.put("TAG_EXPOSURE_TIME", exif.getAttribute(TAG_EXPOSURE_TIME));
+            exifValue.put("TAG_FLASH", String.valueOf(flash_count));
+            //exifValue.put("TAG_WHITE_BALANCE", exif.getAttribute(TAG_WHITE_BALANCE));
+            exifValue.put("TAG_ISO_SPEED_RATINGS", String.valueOf(iso));
+            exifValue.put("TAG_EXPOSURE_TIME", String.valueOf(exposure));
 
             //Array에 입력
             exifArray.add(exifValue);
@@ -139,10 +140,10 @@ public class CustomDialog {
             JSONObject exifValue = new JSONObject();
             //정보 입력
             exifValue.put("NAME", name);
-            exifValue.put("TAG_FLASH", exif.getAttribute(TAG_FLASH));
-            exifValue.put("TAG_WHITE_BALANCE", exif.getAttribute(TAG_WHITE_BALANCE));
-            exifValue.put("TAG_ISO_SPEED_RATINGS", exif.getAttribute(TAG_ISO_SPEED_RATINGS));
-            exifValue.put("TAG_EXPOSURE_TIME", exif.getAttribute(TAG_EXPOSURE_TIME));
+            exifValue.put("TAG_FLASH", String.valueOf(flash_count));
+            //exifValue.put("TAG_WHITE_BALANCE", exif.getAttribute(TAG_WHITE_BALANCE));
+            exifValue.put("TAG_ISO_SPEED_RATINGS", String.valueOf(iso));
+            exifValue.put("TAG_EXPOSURE_TIME", String.valueOf(exposure));
 
             //Array에 입력
             exifArray.add(exifValue);

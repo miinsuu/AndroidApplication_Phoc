@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private Size mPreviewSize;
     private StreamConfigurationMap map;
     private Uri selectedImageUri;
+    private String sendImageUri;
     private ExifInterface exif;
     static int flash_count;
     static long exposure;
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar isoSeek;
     private SeekBar exposureSeek;
     private SeekBar wbSeek;
+    private boolean haveExif;
+    Intent intent;
     private static final String TAG = "MainActivity";
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray(4);
     static {
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_180, 270);
         ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
+
 
 
     @Override
@@ -112,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
                     200);
         }else {
             // 권한이 있을 경우에만 layout을 전개한다.
+            intent = getIntent(); /*데이터 수신*/
+            if((intent.getStringExtra("Exif")) != null && (intent.getStringExtra("Exif")).equals("Exif"))
+                haveExif = true;
             initLayout();
         }
 
@@ -144,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera);
         mTextureView=findViewById(R.id.preview);
         mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
 
@@ -153,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     takePicture();
+
                 } catch (CameraAccessException e) {
                     e.printStackTrace();
                 }
@@ -233,20 +241,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //exifbutton 클릭 시 사진의 uri를 가진 intent 도착
-        Intent intent = getIntent(); /*데이터 수신*/
+        if(haveExif == true) {
+            //exifbutton 클릭 시 사진의 uri를 가진 intent 도착
 
-        String imageUriString = intent.getStringExtra("imageUriString");
-        selectedImageUri = Uri.parse(imageUriString);
+            String imageUriString = intent.getStringExtra("imageUriString");
+            selectedImageUri = Uri.parse(imageUriString);
 
-        //사진에서 exif값 추출
-        try {
-            exif = new ExifInterface(getPath(selectedImageUri));
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Exif Error!", Toast.LENGTH_LONG).show();
+            //사진에서 exif값 추출
+            try {
+                exif = new ExifInterface(getPath(selectedImageUri));
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Exif Error!", Toast.LENGTH_LONG).show();
+            }
+
+            //사진옆 버튼 선택시, 해당사진의 설정값으로 설정되어 카메라실행
+            //플래시 설정
+            if (exif.getAttribute(TAG_FLASH).equals("1"))
+                flash_count = 1;
+            else if (exif.getAttribute(TAG_FLASH).equals("0"))
+                flash_count = 0;
+            //ISO 설정
+            if (!exif.getAttribute(TAG_ISO_SPEED_RATINGS).isEmpty())
+                iso = Integer.parseInt(exif.getAttribute(TAG_ISO_SPEED_RATINGS));
+            //exposure time(셔터스피드) 설정
+            if (!exif.getAttribute(TAG_EXPOSURE_TIME).isEmpty()) {
+                double temp = exif.getAttributeDouble(TAG_EXPOSURE_TIME, 0) * 1000000000l;
+                exposure = (long) temp;
+            }
+
         }
-
          // 플래시 버튼 이벤트
         ((Button)findViewById(R.id.flash_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,8 +280,6 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView)findViewById(R.id.isoInfoText)).setVisibility(View.GONE);
                 exposureSeek.setVisibility(View.GONE);
                 ((TextView)findViewById(R.id.exposureInfoText)).setVisibility(View.GONE);
-                wbSeek.setVisibility(View.GONE);
-                ((TextView)findViewById(R.id.wbInfoText)).setVisibility(View.GONE);
 
                 flash_count++;
 
@@ -303,8 +325,6 @@ public class MainActivity extends AppCompatActivity {
                 //나머지 창 없애기
                 exposureSeek.setVisibility(View.GONE);
                 ((TextView)findViewById(R.id.exposureInfoText)).setVisibility(View.GONE);
-                wbSeek.setVisibility(View.GONE);
-                ((TextView)findViewById(R.id.wbInfoText)).setVisibility(View.GONE);
 
                 if(!isoSeek.isShown() && (((TextView)findViewById(R.id.isoInfoText)).getVisibility() == View.GONE)) {
                     isoSeek.setVisibility(View.VISIBLE);
@@ -344,8 +364,6 @@ public class MainActivity extends AppCompatActivity {
                 //나머지 창 없애기
                 isoSeek.setVisibility(View.GONE);
                 ((TextView)findViewById(R.id.isoInfoText)).setVisibility(View.GONE);
-                wbSeek.setVisibility(View.GONE);
-                ((TextView)findViewById(R.id.wbInfoText)).setVisibility(View.GONE);
 
                 if(!exposureSeek.isShown() && (((TextView)findViewById(R.id.exposureInfoText)).getVisibility() == View.GONE)) {
                     exposureSeek.setVisibility(View.VISIBLE);
@@ -360,45 +378,45 @@ public class MainActivity extends AppCompatActivity {
 
 
         //white balance seekbar로 설정
-        wbSeek = (SeekBar)findViewById(R.id.wbSeek);
-        wbSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                whiteBalance = progress;
-                ((TextView)findViewById(R.id.wbInfoText)).setText(String.valueOf(progress));
-                //updatePreview();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        //WB버튼 seekbar 띄우기
-        ((Button)findViewById(R.id.WB_btn)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //나머지 창 없애기
-                isoSeek.setVisibility(View.GONE);
-                ((TextView)findViewById(R.id.isoInfoText)).setVisibility(View.GONE);
-                exposureSeek.setVisibility(View.GONE);
-                ((TextView)findViewById(R.id.exposureInfoText)).setVisibility(View.GONE);
-
-                if(!wbSeek.isShown() && (((TextView)findViewById(R.id.wbInfoText)).getVisibility() == View.GONE)) {
-                    wbSeek.setVisibility(View.VISIBLE);
-                    ((TextView)findViewById(R.id.wbInfoText)).setVisibility(View.VISIBLE);
-                }
-                else if(wbSeek.isShown() && (((TextView)findViewById(R.id.wbInfoText)).getVisibility() == View.VISIBLE)) {
-                    wbSeek.setVisibility(View.GONE);
-                    ((TextView)findViewById(R.id.wbInfoText)).setVisibility(View.GONE);
-                }
-            }
-        });
+//        wbSeek = (SeekBar)findViewById(R.id.wbSeek);
+//        wbSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+//                whiteBalance = progress;
+//                ((TextView)findViewById(R.id.wbInfoText)).setText(String.valueOf(progress));
+//                //updatePreview();
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
+//        //WB버튼 seekbar 띄우기
+//        ((Button)findViewById(R.id.WB_btn)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //나머지 창 없애기
+//                isoSeek.setVisibility(View.GONE);
+//                ((TextView)findViewById(R.id.isoInfoText)).setVisibility(View.GONE);
+//                exposureSeek.setVisibility(View.GONE);
+//                ((TextView)findViewById(R.id.exposureInfoText)).setVisibility(View.GONE);
+//
+//                if(!wbSeek.isShown() && (((TextView)findViewById(R.id.wbInfoText)).getVisibility() == View.GONE)) {
+//                    wbSeek.setVisibility(View.VISIBLE);
+//                    ((TextView)findViewById(R.id.wbInfoText)).setVisibility(View.VISIBLE);
+//                }
+//                else if(wbSeek.isShown() && (((TextView)findViewById(R.id.wbInfoText)).getVisibility() == View.VISIBLE)) {
+//                    wbSeek.setVisibility(View.GONE);
+//                    ((TextView)findViewById(R.id.wbInfoText)).setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
 
     }
@@ -442,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
         captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF);
         //플래시 설정
         if(flash_count == 1)
-            captureBuilder.set(CaptureRequest.FLASH_MODE,CameraMetadata.FLASH_MODE_TORCH);
+            captureBuilder.set(CaptureRequest.FLASH_MODE,CameraMetadata.FLASH_MODE_SINGLE);
         else if(flash_count == 0)
             captureBuilder.set(CaptureRequest.FLASH_MODE,CameraMetadata.FLASH_MODE_OFF);
         //ISO 설정
@@ -450,6 +468,7 @@ public class MainActivity extends AppCompatActivity {
         //셔터스피드(노출시간, exposure time) 설정
         captureBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, exposure);
         //white balance 설정
+//        captureBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
 //        captureBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
 //        captureBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, computeTemperature(whiteBalance));
 
@@ -468,6 +487,13 @@ public class MainActivity extends AppCompatActivity {
             folder.mkdirs(); }
 
         final File file = new File(folder,imageFileName);
+
+        if(haveExif == false)
+        {
+            //전시화면에 보낼 저장된 사진URI
+            //sendImageUri = file.toString();
+            //Log.e("파일두스트링 Uri만들기전 sendImageUri", sendImageUri);
+        }
 
         // 이미지를 캡처할 때 자동으로 호출된다.
         ImageReader.OnImageAvailableListener readerListener =
@@ -547,6 +573,18 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "takePicture() createCaptureRequest fail");
             ex.printStackTrace();
         }
+
+        if(haveExif == false)
+        {
+            //Intent intent = new Intent(MainActivity.this, MakeFeed.class);
+//            Log.e("전시직전 스트링URI", sendImageUri);
+//            intent.putExtra("imageUriString", sendImageUri); /*송신*/
+            //startActivity(intent);
+            flash_count = 0;
+            //updatePreview();
+            finish();
+        }
+
 
     }
 
@@ -657,23 +695,6 @@ public class MainActivity extends AppCompatActivity {
         }
         mPreviewBuiler.addTarget(surface);
 
-        //사진옆 버튼 선택시, 해당사진의 설정값으로 설정되어 카메라실행
-
-        //플래시 설정
-        if(exif.getAttribute(TAG_FLASH).equals("1"))
-            flash_count = 1;
-        else if(exif.getAttribute(TAG_FLASH).equals("0"))
-            flash_count = 0;
-        //ISO 설정
-        if(!exif.getAttribute(TAG_ISO_SPEED_RATINGS).isEmpty())
-            iso = Integer.parseInt(exif.getAttribute(TAG_ISO_SPEED_RATINGS));
-        //exposure time(셔터스피드) 설정
-        if(!exif.getAttribute(TAG_EXPOSURE_TIME).isEmpty())
-        {
-            double temp = exif.getAttributeDouble(TAG_EXPOSURE_TIME, 0) * 1000000000l;
-            exposure = (long)temp;
-        }
-
 
         try {
             cameraDevice.createCaptureSession(Arrays.asList(surface),  // / 미리보기용으로 위에서 생성한 surface객체 사용
@@ -700,10 +721,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         //mPreviewBuiler.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-        if(flash_count == 1)
-            mPreviewBuiler.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_TORCH);
-        else if(flash_count == 0)
-            mPreviewBuiler.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_OFF);
+//        if(flash_count == 1)
+//            mPreviewBuiler.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_SINGLE);
+//        else if(flash_count == 0)
+//            mPreviewBuiler.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_OFF);
         //mPreviewBuiler.set(CaptureRequest.COLOR_CORRECTION_MODE, CameraMetadata.SHU);
         //mPreviewBuiler.set(CaptureResult.FLASH_STATE, CameraMetadata.FLASH_STATE_CHARGING);
         //mPreviewBuiler.set(CaptureRequest.CONTROL_AWB_LOCK, true);

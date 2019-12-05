@@ -50,29 +50,31 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="51dp"
             android:textColor="@android:color/white"
             android:textSize="30dp"
             android:textAlignment="center"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            />
         <SeekBar
             android:id="@+id/isoSeek"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:max="800"
             android:progress="100"
             android:min="100"
-            android:thumb="@drawable/camera_button"
+            android:thumb="@drawable/thumb"
             android:layout_gravity="bottom"
             android:background="@android:color/darker_gray"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/exposureInfoText"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="51dp"
             android:textColor="@android:color/white"
             android:textSize="30dp"
             android:textAlignment="center"
@@ -80,8 +82,8 @@
         <SeekBar
             android:id="@+id/exposureSeek"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:thumb="@drawable/camera_button"
+            android:layout_height="50dp"
+            android:thumb="@drawable/thumb"
             android:layout_gravity="bottom"
             android:max="2000"
             android:min="1"
@@ -94,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="51dp"
             android:textColor="@android:color/white"
             android:textSize="30dp"
             android:textAlignment="center"
@@ -102,11 +104,11 @@
         <SeekBar
             android:id="@+id/wbSeek"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:max="100"
             android:min="0"
             android:progress="50"
-            android:thumb="@drawable/camera_button"
+            android:thumb="@drawable/thumb"
             android:layout_gravity="bottom"
             android:background="@android:color/darker_gray"
             android:visibility="gone" />
@@ -119,26 +121,18 @@
         android:background="@android:color/black">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
 
-            <Button
-                android:id="@+id/WB_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="WB"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                />
 
             <Button
                 android:id="@+id/ISO_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ISO"
-                android:layout_toRightOf="@id/WB_btn"
-                android:layout_marginLeft="10dp"
+                android:layout_toLeftOf="@id/exposure_btn"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 />
 
@@ -147,8 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="셔터스피드"
-                android:layout_toRightOf="@id/ISO_btn"
-                android:layout_marginLeft="10dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 />
 
