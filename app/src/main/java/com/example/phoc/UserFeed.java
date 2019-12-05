@@ -24,7 +24,7 @@ public class UserFeed extends Fragment{
         final UserFeedItemAdapter adapter = new UserFeedItemAdapter(new UserFeedItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position, int viewType) {
-                if(viewType == 1) { //viewType1은 TextView인 userName
+                if(viewType == 1) { //viewType1은 TextView인 title
                     ((main) getActivity()).onFragmentSelected(6, null);
                 }
             }
