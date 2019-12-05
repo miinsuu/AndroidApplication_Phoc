@@ -1,6 +1,7 @@
 package com.example.phoc;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.example.phoc.MySession.MySession;
 
 public class SubscribeUser extends Fragment implements View.OnClickListener{
 
@@ -24,7 +29,12 @@ public class SubscribeUser extends Fragment implements View.OnClickListener{
 
         fromSubscribeUser2UserFeed = rootView.findViewById(R.id.fromSubscribeUser2UserFeed);
         fromSubscribeUser2UserFeed.setOnClickListener(this);
-
+        DatabaseQueryClass.Post.getPostBySubscribing(MySession.getSession().getUserId(), new DataListener() {
+            @Override
+            public void getData(Object data) {
+                Log.d("subsc", data.toString());
+            }
+        });
         return rootView;
     }
 

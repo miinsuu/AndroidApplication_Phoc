@@ -11,17 +11,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.phoc.DatabaseConnection.DataListListener;
 import com.example.phoc.DatabaseConnection.DataListener;
 import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.example.phoc.MySession.MySession;
 import com.example.phoc.listView.FeedItem;
 import com.example.phoc.listView.FeedItemAdapter;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import java.util.ArrayList;
 
 
 public class Myfeed extends Fragment{

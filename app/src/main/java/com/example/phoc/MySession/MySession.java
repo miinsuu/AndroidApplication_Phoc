@@ -1,15 +1,12 @@
-package com.example.phoc;
+package com.example.phoc.MySession;
 
 import android.util.Log;
 
 import com.example.phoc.DatabaseConnection.DataListener;
 import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import org.json.JSONObject;
 
 public class MySession {
     private static MySession session = new MySession();
@@ -32,8 +29,8 @@ public class MySession {
             public void getData(Object data) {
                 JsonElement element = new JsonParser().parse(data.toString());
                 JsonObject jobj = element.getAsJsonObject();
-                nickname = jobj.get("nick").toString();
-                userId = jobj.get("userId").toString();
+                nickname = jobj.get("nick").getAsString();
+                userId = jobj.get("userId").getAsString();
 
                 Log.d("login", nickname + " : " +userId );
             }
@@ -47,6 +44,9 @@ public class MySession {
     }
     public String getUserId(){
         return this.userId;
+    }
+    public String getUserNick(){
+        return this.nickname;
     }
     public void clearSession() {
          this.session = new MySession();

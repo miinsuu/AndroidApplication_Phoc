@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.phoc.MySession;
+import com.example.phoc.MySession.MySession;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -163,7 +163,37 @@ public class DatabaseQueryClass {
             });
         }
 
-        public static void getPostBySubscribing(String[] subs){
+        public static void getPostBySubscribing(String follower, final DataListener dataListener){
+            Log.d("subsc", follower.toString());
+            db.collection("subscribe").whereEqualTo("followerId", follower)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            Log.d("subsc" , "onCompleete called");
+                            ArrayList<String> followings = new ArrayList<String>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                followings.add(document.getData().get("followingId").toString());
+                            }
+                            Log.d("subsc" , followings.toString());
+                            CollectionReference postsRef = db.collection("posts");
+
+                            for(String element : followings){
+                                Log.d("subsc", "e :" + element);
+                                postsRef.whereEqualTo("userId", element).get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    dataListener.getData(new Gson().toJson(document.getData()));
+                                                }
+                                            }
+                                        });
+
+                            }
+
+                        }
+                    });
         }
         public static void createPost(final String cameraSettingJson,
                                       final String content,
@@ -251,6 +281,7 @@ public class DatabaseQueryClass {
               }
           });
         }
+
         public static void getUserInfoByEmail(final String email, final DataListener dataListener){
             db.collection("users")
                     .whereEqualTo("email", email)
