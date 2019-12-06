@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#4CAF50"
+    android:layout_marginBottom="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:gravity="right">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#3F51B5"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="#3F51B5"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#3F51B5"/>
+    <TextView
+        android:id="@+id/fromUserFeed2ParticularTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="#주제"
+        android:textSize="24dp" />
+    <TextView
+        android:id="@+id/inUserFeedComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="짧은 한줄의 작품 소개"
+        android:textSize="17dp" />
+    <TextView
+        android:id="@+id/inUserFeedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="2019.10.09"
+        android:textSize="15dp"
+        android:layout_marginBottom="10dp"/>
+
+</LinearLayout>

@@ -19,6 +19,7 @@
             android:background="#3F51B5"/>
 
         <TextView
+            android:id="@+id/themeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -27,6 +28,7 @@
             android:textAlignment="center" />
 
         <EditText
+            android:id="@+id/infoText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -40,6 +42,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/uploadBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -49,7 +52,6 @@
         android:text="전시"
         android:textStyle="bold"
         android:textSize="30dp"
-
         />
 
 </RelativeLayout>

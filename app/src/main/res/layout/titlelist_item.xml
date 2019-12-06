@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="#4CAF50"
+    android:layout_marginBottom="15dp">
+
+    <TextView
+        android:id="@+id/particulartitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주제"
+        android:textSize="23dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"/>
+
+
+</RelativeLayout>

@@ -11,6 +11,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.phoc.MyFeedActivity.Myfeed;
+import com.example.phoc.ParticularTitleActivity.ParticularTitle;
+import com.example.phoc.SearchUserActivity.SearchUser;
+import com.example.phoc.SubscribeUserActivity.SubscribeUser;
+import com.example.phoc.TitleListActivity.TitleList;
+import com.example.phoc.UserFeedActivity.UserFeed;
 import com.google.android.material.navigation.NavigationView;
 
 public class main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentCallback{
