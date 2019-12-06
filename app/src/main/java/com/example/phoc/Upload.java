@@ -1,21 +1,34 @@
 package com.example.phoc;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+
+import static android.media.ExifInterface.TAG_EXPOSURE_TIME;
+import static android.media.ExifInterface.TAG_FLASH;
+import static android.media.ExifInterface.TAG_ISO_SPEED_RATINGS;
 
 public class Upload extends AppCompatActivity implements View.OnClickListener{
 
     Button upload;
     ImageView upload_image;
     Uri selectedImageUri;
+    String exifJson;
+    ExifInterface exif;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +54,48 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         upload_image = (ImageView) findViewById(R.id.upload_image);
         upload_image.setImageURI(selectedImageUri);
 
+        //exif값을 JSON포맷으로 String변수에 저장
+        makeExif();
+
 //        Bitmap bm = Images.Media.getBitmap(getContentResolver(), selectedImageUri);
 //        imgView.setImageBitmap(bm);
+    }
+
+    private void makeExif() {
+        //사진에서 exif값 추출
+        try {
+            exif = new ExifInterface(getPath(selectedImageUri));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Exif Error!", Toast.LENGTH_LONG).show();
+        }
+
+        exifJson = "";
+        String flash;
+        String iso;
+        String exposure;
+
+        //플래시 설정값
+        flash = exif.getAttribute(TAG_FLASH);
+        //ISO 설정값
+        iso = exif.getAttribute(TAG_ISO_SPEED_RATINGS);
+        //exposure time(셔터스피드) 설정값
+        double temp = exif.getAttributeDouble(TAG_EXPOSURE_TIME, 0) * 1000000000l;
+        exposure = String.valueOf((long) temp);
+
+
+        exifJson = "{\"TAG_EXPOSURE_TIME\":\"" + exposure + "\",\"TAG_ISO_SPEED_RATINGS\":\"" + iso + "\",\"TAG_FLASH\":\"" + flash + "\"}";
+        Log.e("exifJson출력결과", exifJson);
+
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        startManagingCursor(cursor);
+        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(columnIndex);
     }
 
     @Override

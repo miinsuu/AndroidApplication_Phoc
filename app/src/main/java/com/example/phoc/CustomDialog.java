@@ -38,7 +38,7 @@ public class CustomDialog {
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(final ExifInterface exif) {
+    public void callFunction() {
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
         final Dialog dlg = new Dialog(context);

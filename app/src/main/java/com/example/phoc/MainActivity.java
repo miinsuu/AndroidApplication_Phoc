@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                 CustomDialog customDialog = new CustomDialog(MainActivity.this);
 
                 // 커스텀 다이얼로그를 호출한다.
-                customDialog.callFunction(exif);
+                customDialog.callFunction();
             }
         });
 
