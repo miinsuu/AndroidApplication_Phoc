@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchUser">
+    tools:context=".SearchUserActivity.SearchUser">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/editText"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
@@ -43,6 +44,7 @@
                     android:layout_gravity="top"/>
 
                 <ImageView
+                    android:id="@+id/searchBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:maxWidth="50dp"
@@ -59,85 +61,12 @@
                 android:text="작가를 검색한 결과입니다."
                 android:textSize="20dp" />
 
-            <ScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchuserRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/fromSearchUser2UserFeed"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="###### 작가님"
-                        android:textSize="15dp"
-                        android:gravity="left|center_vertical"/>
-                </LinearLayout>
+                android:layout_height="match_parent" />
 
 
-            </ScrollView>
         </LinearLayout>
 
     </RelativeLayout>

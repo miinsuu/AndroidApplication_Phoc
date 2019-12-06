@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1071224133580",
+    "firebase_url": "https://phoc-50746.firebaseio.com",
+    "project_id": "phoc-50746",
+    "storage_bucket": "phoc-50746.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071224133580:android:373b08e465dcf94e30ef69",
+        "android_client_info": {
+          "package_name": "com.example.phoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071224133580-lub255oedtm9anak9q8bilt3bcifr6s0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.phoc",
+            "certificate_hash": "ad374d9eba7d06d6866c47c1d3da3f675ade42a6"
+          }
+        },
+        {
+          "client_id": "1071224133580-de48vduu58k9s186f14h0pvt2i78q535.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3H2AhU-pVn7VwGOvnrHsAMYvuJkvCbwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071224133580-de48vduu58k9s186f14h0pvt2i78q535.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

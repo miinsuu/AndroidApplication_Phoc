@@ -16,10 +16,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
-
 import static android.media.ExifInterface.TAG_EXPOSURE_TIME;
 import static android.media.ExifInterface.TAG_FLASH;
 import static android.media.ExifInterface.TAG_ISO_SPEED_RATINGS;
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.google.firebase.storage.FirebaseStorage;
+
 
 public class Upload extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,6 +32,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     String exifJson;
     ExifInterface exif;
 
+    FirebaseStorage storage = FirebaseStorage.getInstance("gs://phoc-50746.appspot.com");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,14 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v == upload){
+           // DatabaseQueryClass.Post.createPost();
+            /*
+            final String cameraSettingJson,
+            final String content,
+            final String imgUrl,
+            final String theme)
+
+             */
             startActivity(new Intent(this, main.class));
         }
     }
