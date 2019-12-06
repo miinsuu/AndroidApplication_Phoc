@@ -23,13 +23,13 @@ public class TitleList extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         TitleListItemAdapter adapter = new TitleListItemAdapter();
 
-        adapter.addItem(new TitleListItem("가을", "30"));
-        adapter.addItem(new TitleListItem("기말고사", "10"));
-        adapter.addItem(new TitleListItem("안드로이드", "40"));
-        adapter.addItem(new TitleListItem("겨울", "20"));
-        adapter.addItem(new TitleListItem("사진", "15"));
-        adapter.addItem(new TitleListItem("고양이", "45"));
-        adapter.addItem(new TitleListItem("강아지", "90"));
+        adapter.addItem(new TitleListItem("가을"));
+        adapter.addItem(new TitleListItem("기말고사"));
+        adapter.addItem(new TitleListItem("안드로이드"));
+        adapter.addItem(new TitleListItem("겨울"));
+        adapter.addItem(new TitleListItem("사진"));
+        adapter.addItem(new TitleListItem("고양이"));
+        adapter.addItem(new TitleListItem("강아지"));
 
         recyclerView.setAdapter(adapter);
         return rootView;
