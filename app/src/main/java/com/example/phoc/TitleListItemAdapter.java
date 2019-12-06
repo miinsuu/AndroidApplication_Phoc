@@ -10,8 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdapter.ViewHolder>{
+interface OnTitleListitemClickListener{
+    public void onItemClick(TitleListItemAdapter.ViewHolder holder, View view, int position);
+}
+public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdapter.ViewHolder> implements OnTitleListitemClickListener{
     ArrayList<TitleListItem> items = new ArrayList<TitleListItem>();
+    OnTitleListitemClickListener listener;
 
     @NonNull
     @Override
@@ -20,7 +24,7 @@ public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdap
         View itemView = inflater.inflate(R.layout.titlelist_item, viewGroup, false);
 
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
@@ -37,14 +41,34 @@ public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdap
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView title;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnTitleListitemClickListener listener) {
             super(itemView);
 
             title = itemView.findViewById(R.id.particulartitle);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(listener != null){
+                        listener.onItemClick(ViewHolder.this, view, position);
+                    }
+                }
+            });
         }
 
         public void setItem(TitleListItem item){
             title.setText("# "+item.getTitle());
+        }
+    }
+    public void setOnItemClickListenr(OnTitleListitemClickListener listener){
+        this.listener = listener;
+    }
+    @Override
+    public void onItemClick(ViewHolder holder, View view, int position) {
+        if(listener != null){
+            listener.onItemClick(holder, view, position);
         }
     }
 

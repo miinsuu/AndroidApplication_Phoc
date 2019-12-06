@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TitleList extends Fragment{
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -21,7 +20,7 @@ public class TitleList extends Fragment{
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        TitleListItemAdapter adapter = new TitleListItemAdapter();
+        final TitleListItemAdapter adapter = new TitleListItemAdapter();
 
         adapter.addItem(new TitleListItem("가을"));
         adapter.addItem(new TitleListItem("기말고사"));
@@ -32,7 +31,15 @@ public class TitleList extends Fragment{
         adapter.addItem(new TitleListItem("강아지"));
 
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListenr(new OnTitleListitemClickListener() {
+            @Override
+            public void onItemClick(TitleListItemAdapter.ViewHolder holder, View view, int position) {
+                ((main) getActivity()).onFragmentSelected(6, null);
+            }
+        });
         return rootView;
     }
+
 
 }
