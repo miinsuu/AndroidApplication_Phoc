@@ -13,10 +13,13 @@
         android:layout_marginRight="10dp">
 
         <ImageView
+            android:id="@+id/upload_image"
             android:layout_width="380dp"
             android:layout_height="380dp"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"
-            android:background="#3F51B5"/>
+            />
+
 
         <TextView
             android:id="@+id/themeText"
