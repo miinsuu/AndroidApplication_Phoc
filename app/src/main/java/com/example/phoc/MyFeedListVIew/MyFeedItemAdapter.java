@@ -1,4 +1,4 @@
-package com.example.phoc.listView;
+package com.example.phoc.MyFeedListVIew;
 
 import android.net.Uri;
 import android.util.Log;
@@ -17,10 +17,10 @@ import com.example.phoc.R;
 import java.util.ArrayList;
 import android.content.Context;
 
-public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.ViewHolder> {
-    ArrayList<FeedItem> items = new ArrayList<FeedItem>();
+public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.ViewHolder> {
+    ArrayList<MyFeedItem> items = new ArrayList<MyFeedItem>();
     private Context context;
-    public FeedItemAdapter(Context context){
+    public MyFeedItemAdapter(Context context){
         this.context = context;
     }
     @NonNull
@@ -34,7 +34,7 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        FeedItem item = items.get(position);
+        MyFeedItem item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -60,7 +60,7 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.ViewHo
             imgView = itemView.findViewById(R.id.imgView);
         }
 
-        public void setItem(FeedItem item){
+        public void setItem(MyFeedItem item){
             title.setText(item.getTitle());
             comment.setText(item.getComment());
             date.setText(item.getDate());
@@ -71,19 +71,19 @@ public class FeedItemAdapter extends RecyclerView.Adapter<FeedItemAdapter.ViewHo
         }
     }
 
-    public void addItem(FeedItem item){
+    public void addItem(MyFeedItem item){
         items.add(item);
     }
 
-    public void setItems(ArrayList<FeedItem> items){
+    public void setItems(ArrayList<MyFeedItem> items){
         this.items = items;
     }
 
-    public FeedItem getItem(int position){
+    public MyFeedItem getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, FeedItem item){
+    public void setItem(int position, MyFeedItem item){
         items.set(position, item);
     }
 }

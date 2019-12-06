@@ -1,12 +1,12 @@
-package com.example.phoc.listView;
+package com.example.phoc.MyFeedListVIew;
 
-public class FeedItem {
+public class MyFeedItem {
     String title;
     String Comment;
     String Date;
     String imgUri;
 
-    public FeedItem(String title, String comment, String date, String imgUri) {
+    public MyFeedItem(String title, String comment, String date, String imgUri) {
         this.title = title;
         this.Comment = comment;
         this.Date = date;

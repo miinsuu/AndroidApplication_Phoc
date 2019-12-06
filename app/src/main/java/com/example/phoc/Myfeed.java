@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phoc.DatabaseConnection.DataListener;
 import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
 import com.example.phoc.MySession.MySession;
-import com.example.phoc.listView.FeedItem;
-import com.example.phoc.listView.FeedItemAdapter;
+import com.example.phoc.MyFeedListVIew.MyFeedItem;
+import com.example.phoc.MyFeedListVIew.MyFeedItemAdapter;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -32,7 +32,7 @@ public class Myfeed extends Fragment{
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        final FeedItemAdapter adapter = new FeedItemAdapter(getContext());
+        final MyFeedItemAdapter adapter = new MyFeedItemAdapter(getContext());
 
         DatabaseQueryClass.Post.getPostsByUserId(MySession.getSession().getUserId(), new DataListener() {
             @Override
@@ -47,14 +47,14 @@ public class Myfeed extends Fragment{
                 String date= obj.get("createdAt").getAsString();
                 String imgUri = obj.get("img").getAsString();
 
-                adapter.addItem(new FeedItem(title, comment, date, imgUri));
+                adapter.addItem(new MyFeedItem(title, comment, date, imgUri));
                 setAdapterToView(adapter);
             }
         });
 
         return rootView;
     }
-    void setAdapterToView(final FeedItemAdapter adapter){
+    void setAdapterToView(final MyFeedItemAdapter adapter){
         recyclerView.setAdapter(adapter);
 
     }
