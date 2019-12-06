@@ -10,8 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAdapter.ViewHolder>{
+interface  OnSearchUserItemClickListener{
+    public void onItemClick(SearchUserItemAdapter.ViewHolder holder, View view, int position);
+}
+public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAdapter.ViewHolder> implements OnSearchUserItemClickListener{
     ArrayList<SearchUserItem> items = new ArrayList<SearchUserItem>();
+    OnSearchUserItemClickListener listener;
 
     @NonNull
     @Override
@@ -19,7 +23,7 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.searchuser_item, viewGroup, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
@@ -36,10 +40,21 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView userName;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnSearchUserItemClickListener listener) {
             super(itemView);
 
             userName = itemView.findViewById(R.id.UserName);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(listener != null){
+                        listener.onItemClick(ViewHolder.this, view, position);
+                    }
+                }
+            });
         }
 
         public void setItem(SearchUserItem item){
@@ -47,9 +62,18 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
         }
     }
 
-    public void addItem(SearchUserItem item){
-        items.add(item);
+
+    public void  setOnItemClickListener(OnSearchUserItemClickListener listener){
+        this.listener = listener;
     }
+    @Override
+    public void onItemClick(ViewHolder holder, View view, int position) {
+        if(listener != null){
+            listener.onItemClick(holder, view, position);
+        }
+    }
+
+    public void addItem(SearchUserItem item){ items.add(item); }
 
     public void setItems(ArrayList<SearchUserItem> items){
         this.items = items;

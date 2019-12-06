@@ -21,7 +21,7 @@ public class SearchUser extends Fragment{
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        SearchUserItemAdapter adapter = new SearchUserItemAdapter();
+        final SearchUserItemAdapter adapter = new SearchUserItemAdapter();
 
         adapter.addItem(new SearchUserItem("김용후"));
         adapter.addItem(new SearchUserItem("재갈용후"));
@@ -32,6 +32,13 @@ public class SearchUser extends Fragment{
         adapter.addItem(new SearchUserItem("남궁용후"));
 
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnSearchUserItemClickListener() {
+            @Override
+            public void onItemClick(SearchUserItemAdapter.ViewHolder holder, View view, int position) {
+                ((main) getActivity()).onFragmentSelected(7, null);
+            }
+        });
         return rootView;
     }
 
