@@ -41,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -71,6 +72,7 @@ import static android.media.ExifInterface.TAG_ISO_SPEED_RATINGS;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class MainActivity extends AppCompatActivity {
 
+    private final int GET_GALLERY_IMAGE_2 = 300;
     private TextureView mTextureView;
     private CameraDevice cameraDevice;
     private CaptureRequest.Builder mPreviewBuiler;
@@ -454,7 +456,7 @@ public class MainActivity extends AppCompatActivity {
         // 이전 카메라 api는 이 기능 지원X
         // 이미지를 캡처하는 순간에 제대로 사진 이미지가 나타나도록 3A를 자동으로 설정
         //captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-        //captureBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, true);
+        captureBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, true);
         captureBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_AUTO);
         captureBuilder.set(CaptureRequest.CONTROL_AE_LOCK, true);
         captureBuilder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF);
@@ -488,12 +490,12 @@ public class MainActivity extends AppCompatActivity {
 
         final File file = new File(folder,imageFileName);
 
-        if(haveExif == false)
-        {
-            //전시화면에 보낼 저장된 사진URI
-            //sendImageUri = file.toString();
-            //Log.e("파일두스트링 Uri만들기전 sendImageUri", sendImageUri);
-        }
+//        if(haveExif == false)
+//        {
+//            //전시화면에 보낼 저장된 사진URI
+////            sendImageUri = Uri.fromFile(file).toString();
+////            Log.e("file->Uri->String = sendImageUri", sendImageUri);
+//        }
 
         // 이미지를 캡처할 때 자동으로 호출된다.
         ImageReader.OnImageAvailableListener readerListener =
@@ -574,20 +576,35 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-        if(haveExif == false)
-        {
-            //Intent intent = new Intent(MainActivity.this, MakeFeed.class);
-//            Log.e("전시직전 스트링URI", sendImageUri);
+        //플래시 초기화
+        flash_count = 0;
+        //갤러리앱으로 이동
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intent, GET_GALLERY_IMAGE_2);
+//            Intent intent = new Intent(MainActivity.this, Upload.class);
+//            Log.e("인텐트 보내기전 sendImageUri", sendImageUri);
 //            intent.putExtra("imageUriString", sendImageUri); /*송신*/
-            //startActivity(intent);
-            flash_count = 0;
+//            startActivity(intent);
             //updatePreview();
-            finish();
-        }
+            //finish();
+
 
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_GALLERY_IMAGE_2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedImageUri = data.getData(); //갤러리에서 선택한 사진 URI 획득
+            //선택사진URI 가지고 전시화면으로 이동
+            Intent intent = new Intent(MainActivity.this, Upload.class);
+            String UriToString = selectedImageUri.toString();
+            intent.putExtra("imageUriString", UriToString); /*송신*/
+            startActivity(intent);
+        }
+    }
 
     // textureView가 화면에 정상적으로 출력되면 onSurfaceTextureAvailable()호출
     private TextureView.SurfaceTextureListener mSurfaceTextureListener=
@@ -727,7 +744,7 @@ public class MainActivity extends AppCompatActivity {
 //            mPreviewBuiler.set(CaptureRequest.FLASH_MODE, CameraMetadata.FLASH_MODE_OFF);
         //mPreviewBuiler.set(CaptureRequest.COLOR_CORRECTION_MODE, CameraMetadata.SHU);
         //mPreviewBuiler.set(CaptureResult.FLASH_STATE, CameraMetadata.FLASH_STATE_CHARGING);
-        //mPreviewBuiler.set(CaptureRequest.CONTROL_AWB_LOCK, true);
+        mPreviewBuiler.set(CaptureRequest.CONTROL_AWB_LOCK, true);
         mPreviewBuiler.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_AUTO);
         mPreviewBuiler.set(CaptureRequest.CONTROL_AE_LOCK, true);
         mPreviewBuiler.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF);

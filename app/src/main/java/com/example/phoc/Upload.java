@@ -34,15 +34,15 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     {
         setContentView(R.layout.activity_upload);
 
-        upload = findViewById(R.id.uploadBtn);
+        upload = (Button)findViewById(R.id.uploadBtn);
         upload.setOnClickListener(this);
 
         //URI로 화면에 사진 뿌리기
-        upload_image = findViewById(R.id.upload_image);
+        upload_image = (ImageView) findViewById(R.id.upload_image);
         upload_image.setImageURI(selectedImageUri);
 
 //        Bitmap bm = Images.Media.getBitmap(getContentResolver(), selectedImageUri);
-//        upload_image.setImageBitmap(bm);
+//        imgView.setImageBitmap(bm);
     }
 
     @Override
