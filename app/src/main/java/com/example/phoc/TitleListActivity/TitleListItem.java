@@ -1,4 +1,4 @@
-package com.example.phoc;
+package com.example.phoc.TitleListActivity;
 
 public class TitleListItem {
     String title;

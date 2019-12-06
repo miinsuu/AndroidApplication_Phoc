@@ -1,4 +1,4 @@
-package com.example.phoc;
+package com.example.phoc.SearchUserActivity;
 
 public class SearchUserItem {
     String userName;

@@ -1,16 +1,18 @@
-package com.example.phoc;
+package com.example.phoc.SubscribeUserActivity;
 
 public class SubscribeUserItem {
     String title;
     String comment;
     String userName;
     String date;
+    String imgUri;
 
-    public SubscribeUserItem(String title, String comment, String userName, String date) {
+    public SubscribeUserItem(String title, String comment, String userName, String date, String imgUri) {
         this.title = title;
         this.comment = comment;
         this.userName = userName;
         this.date = date;
+        this.imgUri = imgUri;
     }
 
     public String getTitle() {
@@ -44,4 +46,7 @@ public class SubscribeUserItem {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public String getImgUri(){ return this.imgUri;}
+
 }

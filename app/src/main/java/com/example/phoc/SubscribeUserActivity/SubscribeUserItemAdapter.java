@@ -1,17 +1,24 @@
-package com.example.phoc;
+package com.example.phoc.SubscribeUserActivity;
 
+import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.phoc.R;
+
 import java.util.ArrayList;
 
 public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUserItemAdapter.ViewHolder>{
     ArrayList<SubscribeUserItem> items = new ArrayList<SubscribeUserItem>();
+    Context context;
 
     public interface OnItemClickListener{
         public  void onItemClick(View view, int position, int type);
@@ -19,8 +26,9 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
 
     private OnItemClickListener onItemClickListener;
 
-    public SubscribeUserItemAdapter(OnItemClickListener onItemClickListener){
+    public SubscribeUserItemAdapter(OnItemClickListener onItemClickListener, Context context){
         this.onItemClickListener = onItemClickListener;
+        this.context = context;
     }
 
     @NonNull
@@ -29,7 +37,7 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.subscribeuser_item, viewGroup, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, this.context);
     }
 
     @Override
@@ -64,14 +72,18 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
         TextView comment;
         TextView userName;
         TextView date;
+        ImageView imgView;
+        Context context;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView, Context context){
             super(itemView);
 
             title = itemView.findViewById(R.id.fromSubscribeUser2ParticularTitle);
             comment = itemView.findViewById(R.id.inSubscribeuserComment);
             userName = itemView.findViewById(R.id.fromSubscribeUser2UserFeed);
             date = itemView.findViewById(R.id.inSubscribeuserDate);
+            imgView = itemView.findViewById(R.id.imgView);
+            this.context = context;
         }
 
         public void setItem(SubscribeUserItem item){
@@ -79,6 +91,8 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
             comment.setText(item.getComment());
             userName.setText(item.getUserName());
             date.setText(item.getDate());
+            Uri uri = Uri.parse(item.getImgUri());
+            Glide.with(context).load(uri).into(imgView);
         }
     }
     public void addItem(SubscribeUserItem item){

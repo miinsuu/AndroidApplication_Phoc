@@ -1,14 +1,16 @@
-package com.example.phoc;
+package com.example.phoc.MyFeedActivity;
 
-public class MyfeedItem{
+public class MyFeedItem {
     String title;
     String Comment;
     String Date;
+    String imgUri;
 
-    public MyfeedItem(String title, String comment, String date) {
+    public MyFeedItem(String title, String comment, String date, String imgUri) {
         this.title = title;
         this.Comment = comment;
         this.Date = date;
+        this.imgUri = imgUri;
     }
 
     public String getTitle() {
@@ -34,4 +36,12 @@ public class MyfeedItem{
     public void setDate(String date) {
         Date = date;
     }
+
+    public void setImgUri(String imgUri) {
+        this.imgUri = imgUri;
+    }
+    public String getImgUri() {
+        return this.imgUri;
+    }
+
 }

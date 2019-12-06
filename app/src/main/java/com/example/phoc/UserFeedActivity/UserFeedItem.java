@@ -1,4 +1,4 @@
-package com.example.phoc;
+package com.example.phoc.UserFeedActivity;
 
 public class UserFeedItem {
     String title;

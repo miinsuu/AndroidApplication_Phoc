@@ -1,4 +1,4 @@
-package com.example.phoc;
+package com.example.phoc.TitleListActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,27 +8,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.phoc.R;
+
 import java.util.ArrayList;
 
-interface  OnSearchUserItemClickListener{
-    public void onItemClick(SearchUserItemAdapter.ViewHolder holder, View view, int position);
+interface OnTitleListitemClickListener{
+    public void onItemClick(TitleListItemAdapter.ViewHolder holder, View view, int position);
 }
-public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAdapter.ViewHolder> implements OnSearchUserItemClickListener{
-    ArrayList<SearchUserItem> items = new ArrayList<SearchUserItem>();
-    OnSearchUserItemClickListener listener;
+public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdapter.ViewHolder> implements OnTitleListitemClickListener{
+    ArrayList<TitleListItem> items = new ArrayList<TitleListItem>();
+    OnTitleListitemClickListener listener;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.searchuser_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.titlelist_item, viewGroup, false);
+
 
         return new ViewHolder(itemView, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        SearchUserItem item = items.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
+        TitleListItem item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -38,12 +41,12 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView userName;
+        TextView title;
 
-        public ViewHolder(@NonNull View itemView, final OnSearchUserItemClickListener listener) {
+        public ViewHolder(@NonNull View itemView, final OnTitleListitemClickListener listener) {
             super(itemView);
 
-            userName = itemView.findViewById(R.id.UserName);
+            title = itemView.findViewById(R.id.particulartitle);
 
             itemView.setOnClickListener(new View.OnClickListener(){
 
@@ -57,13 +60,11 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
             });
         }
 
-        public void setItem(SearchUserItem item){
-            userName.setText(item.getUserName());
+        public void setItem(TitleListItem item){
+            title.setText("# "+item.getTitle());
         }
     }
-
-
-    public void  setOnItemClickListener(OnSearchUserItemClickListener listener){
+    public void setOnItemClickListenr(OnTitleListitemClickListener listener){
         this.listener = listener;
     }
     @Override
@@ -73,17 +74,19 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
         }
     }
 
-    public void addItem(SearchUserItem item){ items.add(item); }
+    public void addItem(TitleListItem item){
+        items.add(item);
+    }
 
-    public void setItems(ArrayList<SearchUserItem> items){
+    public void setItems(ArrayList<TitleListItem> items){
         this.items = items;
     }
 
-    public SearchUserItem getItem(int position){
+    public TitleListItem getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, SearchUserItem item){
+    public void setItem(int position, TitleListItem item){
         items.set(position, item);
     }
 }

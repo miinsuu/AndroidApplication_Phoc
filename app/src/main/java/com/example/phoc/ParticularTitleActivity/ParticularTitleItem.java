@@ -1,4 +1,4 @@
-package com.example.phoc;
+package com.example.phoc.ParticularTitleActivity;
 
 public class ParticularTitleItem {
     String comment;

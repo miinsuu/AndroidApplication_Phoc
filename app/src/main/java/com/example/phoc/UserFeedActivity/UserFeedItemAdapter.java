@@ -1,4 +1,4 @@
-package com.example.phoc;
+package com.example.phoc.UserFeedActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.phoc.R;
+
 import java.util.ArrayList;
 
-public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitleAdapter.ViewHolder> {
-    ArrayList<ParticularTitleItem> items = new ArrayList<ParticularTitleItem>();
+public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapter.ViewHolder>{
+    ArrayList<UserFeedItem> items = new ArrayList<UserFeedItem>();
 
     public interface OnItemClickListener{
         public  void onItemClick(View view, int position, int type);
@@ -19,7 +21,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
 
     private OnItemClickListener onItemClickListener;
 
-    public ParticularTitleAdapter(OnItemClickListener onItemClickListener){
+    public UserFeedItemAdapter(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -27,23 +29,23 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.particulartitle_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.userfeed_item, viewGroup, false);
 
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        ParticularTitleAdapter.ViewHolder holder = (ParticularTitleAdapter.ViewHolder)viewHolder;
-        holder.userName.setOnClickListener(new View.OnClickListener() {
+        UserFeedItemAdapter.ViewHolder holder = (UserFeedItemAdapter.ViewHolder)viewHolder;
+        holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //viewType1은 TextView인 userName
+                //viewType1은 TextView인 title
                 onItemClickListener.onItemClick(v, position, 1);
             }
         });
 
-        ParticularTitleItem item = items.get(position);
+        UserFeedItem item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -52,40 +54,40 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
         return items.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView title;
         TextView comment;
-        TextView userName;
         TextView date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            comment = itemView.findViewById(R.id.inParticulartitleComment);
-            userName = itemView.findViewById(R.id.fromParticularTitle2UserFeed);
-            date = itemView.findViewById(R.id.intParticulartitleDate);
+            title = itemView.findViewById(R.id.fromUserFeed2ParticularTitle);
+            comment = itemView.findViewById(R.id.inUserFeedComment);
+            date = itemView.findViewById(R.id.inUserFeedDate);
         }
 
-        public void setItem(ParticularTitleItem item){
+        public void setItem(UserFeedItem item){
+            title.setText(item.getTitle());
             comment.setText(item.getComment());
-            userName.setText(item.getUserName());
             date.setText(item.getDate());
         }
     }
 
-    public void addItem(ParticularTitleItem item){
+    public void addItem(UserFeedItem item){
         items.add(item);
     }
 
-    public void setItems(ArrayList<ParticularTitleItem> items){
+    public void setItems(ArrayList<UserFeedItem> items){
         this.items = items;
     }
 
-    public ParticularTitleItem getItem(int position){
+    public UserFeedItem getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, ParticularTitleItem item){
+    public void setItem(int position, UserFeedItem item){
         items.set(position, item);
     }
+
 }
