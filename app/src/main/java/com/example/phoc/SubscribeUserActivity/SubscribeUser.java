@@ -45,7 +45,7 @@ public class SubscribeUser extends Fragment{
 
         DatabaseQueryClass.Post.getPostBySubscribing(MySession.getSession().getUserId(), new DataListener() {
             @Override
-            public void getData(Object data) {
+            public void getData(Object data, String id) {
 
                 JsonElement ele = new JsonParser().parse(data.toString());
                 JsonObject obj = ele.getAsJsonObject();

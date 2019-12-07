@@ -26,7 +26,7 @@ public class MySession {
         this.email = email;
         DatabaseQueryClass.User.getUserInfoByEmail(email, new DataListener() {
             @Override
-            public void getData(Object data) {
+            public void getData(Object data, String id) {
                 JsonElement element = new JsonParser().parse(data.toString());
                 JsonObject jobj = element.getAsJsonObject();
                 nickname = jobj.get("nick").getAsString();

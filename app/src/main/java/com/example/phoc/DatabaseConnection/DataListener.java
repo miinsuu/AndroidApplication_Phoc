@@ -7,5 +7,5 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public interface DataListener {
-    public void getData(Object data);
+    public void getData(Object data, String id);
 }

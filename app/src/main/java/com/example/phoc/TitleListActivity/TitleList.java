@@ -34,7 +34,7 @@ public class TitleList extends Fragment{
 
         DatabaseQueryClass.Theme.getThemes(new DataListener() {
             @Override
-            public void getData(Object data) {
+            public void getData(Object data, String id) {
                 JsonElement ele = new JsonParser().parse(data.toString());
                 JsonObject obj = ele.getAsJsonObject();
                 Log.d("Theme", obj.toString());

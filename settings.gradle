@@ -1,2 +1,2 @@
-include ':app', ':json_simple-1.1'
+include ':app'
 rootProject.name='PHOC'

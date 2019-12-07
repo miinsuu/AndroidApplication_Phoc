@@ -46,7 +46,7 @@ public class Myfeed extends Fragment{
 
         DatabaseQueryClass.Post.getPostsByUserId(MySession.getSession().getUserId(), new DataListener() {
             @Override
-            public void getData(Object json) {
+            public void getData(Object json, String postId) {
 
                 JsonElement ele = new JsonParser().parse(json.toString());
                 JsonObject obj = ele.getAsJsonObject();
@@ -56,8 +56,9 @@ public class Myfeed extends Fragment{
                 String comment = obj.get("content").getAsString();
                 String date= obj.get("createdAt").getAsString();
                 String imgUri = obj.get("img").getAsString();
+                String id = postId;
 
-                adapter.addItem(new MyFeedItem(title, comment, date, imgUri));
+                adapter.addItem(new MyFeedItem(postId, title, comment, date, imgUri));
                 setAdapterToView(adapter);
             }
         });

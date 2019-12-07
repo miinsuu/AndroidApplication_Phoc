@@ -35,6 +35,7 @@ public class DatabaseQueryClass {
     private  DatabaseQueryClass(){
 
     }
+    /*
     private static void findUserIdByNickname(String nick, final DataListener dataListener){
         CollectionReference postRef = db.collection("users");
         Query query = postRef.whereEqualTo("nick", nick);
@@ -44,7 +45,7 @@ public class DatabaseQueryClass {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        dataListener.getData(document.getId());
+                        dataListener.getData(document.getId(), null);
                     }
                 } else {
                     Log.d("User", "Error getting documents: ", task.getException());
@@ -52,6 +53,7 @@ public class DatabaseQueryClass {
             }
         });
     }
+    */
     public static class Theme{
         public static void getTodayTheme(final DataListener dataListener){
             Log.d("Theme", "getTodayTheme called");
@@ -62,7 +64,7 @@ public class DatabaseQueryClass {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         Log.d("Theme", "get today theme success" );
-                        dataListener.getData(task.getResult().getData());
+                        dataListener.getData(task.getResult().getData(), null);
                     } else {
                         Log.d("Post", "Error getting documents: ", task.getException());
                     }
@@ -80,7 +82,7 @@ public class DatabaseQueryClass {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     String json = new Gson().toJson(document.getData());
                                     Log.d("Theme", json);
-                                    dataListener.getData(json);
+                                    dataListener.getData(json, null);
                                 }
                             } else {
                                 Log.d("Theme", "Error getting documents: ", task.getException());
@@ -92,7 +94,7 @@ public class DatabaseQueryClass {
     }
 
     public static class Post{
-        public static void getPostsByTheme(String theme, final DataListListener dataListener){
+        public static void getPostsByTheme(String theme, final DataListener dataListener){
             Log.d("Post", "byTheme called");
             CollectionReference postRef = db.collection("posts");
             Query query = postRef.whereEqualTo("theme", theme);
@@ -103,7 +105,7 @@ public class DatabaseQueryClass {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d("Post", document.getId() + " => " + document.getData());
-                          //  dataListener.getData(task.getResult());
+                            dataListener.getData( new Gson().toJson(document.getData()), document.getId());
                         }
                     } else {
                         Log.d("Post", "Error getting documents: ", task.getException());
@@ -111,6 +113,7 @@ public class DatabaseQueryClass {
                 }
             });
         }
+        /*
         public static void getPostsByNickname(String nickname, final DataListListener dataListener){
             Log.d("Post", "by nick called");
             findUserIdByNickname(nickname, new DataListener() {
@@ -134,7 +137,7 @@ public class DatabaseQueryClass {
 
                                     dataList.add(jobj);
                                 }
-                                dataListener.getData(dataList);
+                                dataListener.getData(dataList, document.getId());
                             } else {
                                 Log.d("Post", "Error getting documents: ", task.getException());
                             }
@@ -143,6 +146,7 @@ public class DatabaseQueryClass {
                 }
             });
         }
+        */
         public static void getPostsByUserId(final String userId, final DataListener dataListener){
             Log.d("Post", "by userId called");
             CollectionReference postRef = db.collection("posts");
@@ -154,7 +158,7 @@ public class DatabaseQueryClass {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Log.d("Post", document.getId() + " => " + document.getData());
                             String json = new Gson().toJson(document.getData());
-                            dataListener.getData(json);
+                            dataListener.getData(json, document.getId());
                         }
                     } else {
                         Log.d("Post", "Error getting documents: ", task.getException());
@@ -185,7 +189,7 @@ public class DatabaseQueryClass {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                                    dataListener.getData(new Gson().toJson(document.getData()));
+                                                    dataListener.getData(new Gson().toJson(document.getData()), document.getId());
                                                 }
                                             }
                                         });
@@ -300,7 +304,7 @@ public class DatabaseQueryClass {
                             data = new Gson().toJson(jobj);
                         }
                         if(data!=null)
-                            dataListener.getData(data);
+                            dataListener.getData(data, null);
                     } else {
                         Log.d("user", "Error getting documents: ", task.getException());
                     }
@@ -316,7 +320,7 @@ public class DatabaseQueryClass {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String json = new Gson().toJson(document.getData());
 
-                        dataListener.getData(json);
+                        dataListener.getData(json, null);
                     }
                 }
             });

@@ -34,7 +34,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
         DatabaseQueryClass.Theme.getTodayTheme(new DataListener() {
             @Override
-            public void getData(Object data) {
+            public void getData(Object data, String id) {
                 String json = new Gson().toJson(data);
                 JsonElement element = new JsonParser().parse(json);
                 JsonObject jobj = element.getAsJsonObject();
