@@ -1,14 +1,14 @@
-package com.example.phoc;
+package com.example.phoc.UserFeedActivity;
 
-public class MyfeedItem{
+public class UserFeedItem {
     String title;
-    String Comment;
-    String Date;
+    String comment;
+    String date;
 
-    public MyfeedItem(String title, String comment, String date) {
+    public UserFeedItem(String title, String comment, String date) {
         this.title = title;
-        this.Comment = comment;
-        this.Date = date;
+        this.comment = comment;
+        this.date = date;
     }
 
     public String getTitle() {
@@ -20,18 +20,18 @@ public class MyfeedItem{
     }
 
     public String getComment() {
-        return Comment;
+        return comment;
     }
 
     public void setComment(String comment) {
-        Comment = comment;
+        this.comment = comment;
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 }
