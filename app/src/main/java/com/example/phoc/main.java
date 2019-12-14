@@ -18,6 +18,7 @@ import com.example.phoc.SearchUserActivity.SearchUser;
 import com.example.phoc.SubscribeUserActivity.SubscribeUser;
 import com.example.phoc.TitleListActivity.TitleList;
 import com.example.phoc.UserFeedActivity.UserFeed;
+import com.example.phoc.SubscribeUserListActivity.SubscribeUserList;
 import com.google.android.material.navigation.NavigationView;
 
 public class main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentCallback{
@@ -30,6 +31,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
     MakeFeed makefeed;
     ParticularTitle particularTitle;
     UserFeed userFeed;
+    SubscribeUserList subscribeUserList;
 
     Toolbar toolbar;
 
@@ -59,6 +61,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         makefeed = new MakeFeed();
         particularTitle = new ParticularTitle();
         userFeed = new UserFeed();
+        subscribeUserList = new SubscribeUserList();
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, home).commit();
     }
@@ -87,6 +90,8 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             onFragmentSelected(3, null);
         } else if(id == R.id.menu5) {
             onFragmentSelected(4, null);
+        } else if(id == R.id.menu6) {
+            onFragmentSelected(8, null);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -123,6 +128,9 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         } else if(position == 7) {
             curFragment = userFeed;
             toolbar.setTitle("User 이름");
+        } else if(position == 8) {
+            curFragment = subscribeUserList;
+            toolbar.setTitle("구독중인 유저들");
         }
         if(bundle != null){
             Log.d("ParticularTitle", bundle.toString());
