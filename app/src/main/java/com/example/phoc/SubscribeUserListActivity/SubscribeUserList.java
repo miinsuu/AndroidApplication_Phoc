@@ -41,6 +41,7 @@ public class SubscribeUserList extends Fragment {
             public void getData(Object data, String id) {
                 Log.d("subscribe", data.toString() );
                 adapter.addItem(new SubscribeUserListItem(data.toString(),id));
+
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -49,7 +50,11 @@ public class SubscribeUserList extends Fragment {
         adapter.setOnItemClickListenr(new OnSubscribeUserListItemClickListener() {
             @Override
             public void onItemClick(SubscribeUserListItemAdapter.ViewHolder holder, View view, int position) {
-                ((main) getActivity()).onFragmentSelected(7, null);
+                SubscribeUserListItem item = adapter.items.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", item.userId);
+                bundle.putString("nick", item.userName);
+                ((main) getActivity()).onFragmentSelected(7, bundle);
             }
         });
         return rootView;

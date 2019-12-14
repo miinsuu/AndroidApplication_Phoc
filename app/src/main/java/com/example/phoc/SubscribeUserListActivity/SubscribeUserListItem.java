@@ -8,7 +8,7 @@ import com.google.gson.JsonParser;
 
 public class SubscribeUserListItem {
     String userName;
-    String userId;
+    public String userId;
 
     public SubscribeUserListItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
