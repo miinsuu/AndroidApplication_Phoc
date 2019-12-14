@@ -124,16 +124,15 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             toolbar.setTitle("작품 만들기");
         } else if(position == 6) {
             curFragment = particularTitle;
-            toolbar.setTitle("특정 주제 이름");
+            toolbar.setTitle("#" + bundle.get("theme").toString());
         } else if(position == 7) {
             curFragment = userFeed;
-            toolbar.setTitle("User 이름");
+            toolbar.setTitle(bundle.get("nick").toString() + "의 갤러리");
         } else if(position == 8) {
             curFragment = subscribeUserList;
             toolbar.setTitle("구독중인 유저들");
         }
         if(bundle != null){
-            Log.d("ParticularTitle", bundle.toString());
             curFragment.setArguments(bundle);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, curFragment).commit();

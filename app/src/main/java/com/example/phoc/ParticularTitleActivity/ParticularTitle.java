@@ -35,7 +35,11 @@ public class ParticularTitle extends Fragment{
             @Override
             public void onItemClick(ParticularTitleItem item, int viewType) {
                 if(viewType == 1) { //viewType은 TextView인 userName
-                    ((main) getActivity()).onFragmentSelected(7, null);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userId", item.userId);
+                    bundle.putString("nick", item.userName);
+
+                    ((main) getActivity()).onFragmentSelected(7, bundle);
                 }
             }
         },getContext());

@@ -13,6 +13,7 @@ public class ParticularTitleItem {
     public String userId;
     public String imgUrl;
     String postId;
+    public String exifJsonString;
 
     public ParticularTitleItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
@@ -24,6 +25,7 @@ public class ParticularTitleItem {
         this.userName = obj.get("nick").getAsString();
         this.userId = obj.get("userId").getAsString();
         this.imgUrl = obj.get("img").getAsString();
+        this.exifJsonString = obj.get("camera").getAsString();
     }
 
     public String getComment() {
