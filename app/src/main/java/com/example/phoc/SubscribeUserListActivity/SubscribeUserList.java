@@ -9,10 +9,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
 import com.example.phoc.SubscribeUserListActivity.OnSubscribeUserListItemClickListener;
 import com.example.phoc.R;
 import com.example.phoc.SubscribeUserListActivity.SubscribeUserListItem;
@@ -21,26 +25,26 @@ import com.example.phoc.main;
 
 
 public class SubscribeUserList extends Fragment {
-
+    RecyclerView recyclerView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.subscribeuserlist, container, false);
-        RecyclerView recyclerView = rootView.findViewById(R.id.subscribeuserlistRecyclerView);
+        recyclerView = rootView.findViewById(R.id.subscribeuserlistRecyclerView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         final SubscribeUserListItemAdapter adapter = new SubscribeUserListItemAdapter();
 
-        adapter.addItem(new SubscribeUserListItem("김용후"));
-        adapter.addItem(new SubscribeUserListItem("갓용후"));
-        adapter.addItem(new SubscribeUserListItem("킹용후"));
-        adapter.addItem(new SubscribeUserListItem("쌉벌레용후"));
-        adapter.addItem(new SubscribeUserListItem("드래곤후"));
-        adapter.addItem(new SubscribeUserListItem("재갈용후"));
-        adapter.addItem(new SubscribeUserListItem("곽용후"));
+        DatabaseQueryClass.User.getSusbscribings(new DataListener() {
+            @Override
+            public void getData(Object data, String id) {
+                Log.d("subscribe", data.toString() );
+                adapter.addItem(new SubscribeUserListItem(data.toString(),id));
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
-        recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListenr(new OnSubscribeUserListItemClickListener() {
             @Override

@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phoc.R;
 
 import java.util.ArrayList;
+import android.content.Context;
 
 interface OnSubscribeUserListItemClickListener {
     public void onItemClick(SubscribeUserListItemAdapter.ViewHolder holder, View view, int position);
 }
 public class SubscribeUserListItemAdapter extends RecyclerView.Adapter<SubscribeUserListItemAdapter.ViewHolder> implements OnSubscribeUserListItemClickListener{
-    ArrayList<SubscribeUserListItem> items = new ArrayList<SubscribeUserListItem>();
+    public ArrayList<SubscribeUserListItem> items = new ArrayList<SubscribeUserListItem>();
     OnSubscribeUserListItemClickListener listener;
 
     @NonNull
@@ -45,7 +46,6 @@ public class SubscribeUserListItemAdapter extends RecyclerView.Adapter<Subscribe
 
         public ViewHolder(@NonNull View itemView, final OnSubscribeUserListItemClickListener listener) {
             super(itemView);
-
             userName = itemView.findViewById(R.id.particularSubscribeUser);
 
             itemView.setOnClickListener(new View.OnClickListener(){
