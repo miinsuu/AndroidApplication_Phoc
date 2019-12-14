@@ -1,6 +1,7 @@
 package com.example.phoc;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -95,7 +96,9 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
 
     @Override
     public void onFragmentSelected(int position, Bundle bundle) {
+
         Fragment curFragment = null;
+
         if (position == 0) {
             curFragment = home;
             toolbar.setTitle("오늘의 주제");
@@ -121,8 +124,10 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             curFragment = userFeed;
             toolbar.setTitle("User 이름");
         }
-
-
+        if(bundle != null){
+            Log.d("ParticularTitle", bundle.toString());
+            curFragment.setArguments(bundle);
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, curFragment).commit();
     }
 

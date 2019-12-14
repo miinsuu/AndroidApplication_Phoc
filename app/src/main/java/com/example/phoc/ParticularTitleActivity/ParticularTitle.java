@@ -1,6 +1,7 @@
 package com.example.phoc.ParticularTitleActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,15 @@ import com.example.phoc.R;
 import com.example.phoc.main;
 
 public class ParticularTitle extends Fragment{
-
+    private String theme;
+    String TAG = "ParticularTitle";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            theme = getArguments().getString("theme");
+            Log.d(TAG, theme);
+        }
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.particulartitle, container, false);
         RecyclerView recyclerView = rootView.findViewById(R.id.particulartitleRecyclerView);
 

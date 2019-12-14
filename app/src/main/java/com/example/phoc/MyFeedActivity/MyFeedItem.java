@@ -1,17 +1,30 @@
 package com.example.phoc.MyFeedActivity;
 
-public class MyFeedItem {
-    String postId;
-    String title;
-    String Comment;
-    String Date;
-    String imgUri;
+import android.util.Log;
 
-    public MyFeedItem(String postId, String title, String comment, String date, String imgUri) {
-        this.title = title;
-        this.Comment = comment;
-        this.Date = date;
-        this.imgUri = imgUri;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class MyFeedItem {
+    public String postId;
+    public String title;
+    public String Comment;
+    public String Date;
+    public String imgUri;
+    public String exifJsonString;
+
+    public MyFeedItem(String postId, String json) {
+        JsonElement ele = new JsonParser().parse(json);
+        JsonObject obj = ele.getAsJsonObject();
+        Log.d("Post", obj.toString());
+
+
+        this.title = obj.get("theme").getAsString();;
+        this.Comment = obj.get("content").getAsString();
+        this.Date = obj.get("createdAt").getAsString();
+        this.imgUri = obj.get("img").getAsString();
+        this.exifJsonString = obj.get("camera").getAsString();
         this.postId = postId;
     }
 
