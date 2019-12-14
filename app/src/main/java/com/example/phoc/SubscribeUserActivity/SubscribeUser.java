@@ -33,12 +33,18 @@ public class SubscribeUser extends Fragment{
 
         final SubscribeUserItemAdapter adapter = new SubscribeUserItemAdapter(new SubscribeUserItemAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position, int viewType) {
+            public void onItemClick( SubscribeUserItem item, int viewType) {
+                Bundle bundle = new Bundle();
+
                 if(viewType == 1) { //viewType1은 TextView인 userName
-                    ((main) getActivity()).onFragmentSelected(7, null);
+                    bundle.putString("nick", item.userName);
+                    bundle.putString("userId",item.userId);
+                    ((main) getActivity()).onFragmentSelected(7, bundle);
                 }
                 else if(viewType == 2) { //viewType2은 TextView인 title
-                    ((main) getActivity()).onFragmentSelected(6, null);
+                    bundle.putString("theme", item.title);
+
+                    ((main) getActivity()).onFragmentSelected(6, bundle);
                 }
             }
         }, getContext());
@@ -47,17 +53,7 @@ public class SubscribeUser extends Fragment{
             @Override
             public void getData(Object data, String id) {
 
-                JsonElement ele = new JsonParser().parse(data.toString());
-                JsonObject obj = ele.getAsJsonObject();
-                Log.d("subsc", obj.toString());
-
-                String title = obj.get("theme").getAsString();
-                String comment = obj.get("content").getAsString();
-                String date= obj.get("createdAt").getAsString();
-                String imgUri = obj.get("img").getAsString();
-                String nick = obj.get("nick").getAsString();
-
-                adapter.addItem(new SubscribeUserItem(title,comment, nick ,date, imgUri));
+                adapter.addItem(new SubscribeUserItem(data.toString(), id));
                 setAdapterToView(adapter);
             }
         });
