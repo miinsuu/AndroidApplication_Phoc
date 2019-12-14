@@ -323,7 +323,7 @@ public class DatabaseQueryClass {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String json = new Gson().toJson(document.getData());
 
-                        dataListener.getData(json, null);
+                        dataListener.getData(json, document.getId());
                     }
                 }
             });

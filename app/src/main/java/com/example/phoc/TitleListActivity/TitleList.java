@@ -35,10 +35,8 @@ public class TitleList extends Fragment{
         DatabaseQueryClass.Theme.getThemes(new DataListener() {
             @Override
             public void getData(Object data, String id) {
-                JsonElement ele = new JsonParser().parse(data.toString());
-                JsonObject obj = ele.getAsJsonObject();
-                Log.d("Theme", obj.toString());
-                adapter.addItem(new TitleListItem(obj.get("name").getAsString()));
+
+                adapter.addItem(new TitleListItem(data.toString()));
                 setAdapterToView(adapter);
             }
         });
@@ -46,7 +44,9 @@ public class TitleList extends Fragment{
         adapter.setOnItemClickListenr(new OnTitleListitemClickListener() {
             @Override
             public void onItemClick(TitleListItemAdapter.ViewHolder holder, View view, int position) {
-                ((main) getActivity()).onFragmentSelected(6, null);
+                Bundle bundle = new Bundle();
+                bundle.putString("theme", adapter.getItem(position).getTitle());
+                ((main) getActivity()).onFragmentSelected(6, bundle);
 
             }
         });

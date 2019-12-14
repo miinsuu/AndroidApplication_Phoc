@@ -1,10 +1,21 @@
 package com.example.phoc.SearchUserActivity;
 
-public class SearchUserItem {
-    String userName;
+import android.util.Log;
 
-    public SearchUserItem(String userName) {
-        this.userName = userName;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class SearchUserItem {
+    public String userName;
+    public String userId;
+
+    public SearchUserItem(String json, String id) {
+        JsonElement ele = new JsonParser().parse(json);
+        JsonObject obj = ele.getAsJsonObject();
+
+        this.userName = obj.get("nick").getAsString();
+        this.userId = id;
     }
 
     public String getUserName() {
