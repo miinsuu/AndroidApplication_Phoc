@@ -113,6 +113,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             toolbar.setTitle("내 작품");
         } else if(position == 5) {
             curFragment = makefeed;
+            curFragment.setArguments(bundle);
             toolbar.setTitle("작품 만들기");
         } else if(position == 6) {
             curFragment = particularTitle;

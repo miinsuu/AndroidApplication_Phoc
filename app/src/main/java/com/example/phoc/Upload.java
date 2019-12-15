@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,9 +29,11 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
 
     Button upload;
     ImageView upload_image;
+    TextView titleNameText;
     Uri selectedImageUri;
     String exifJson;
     ExifInterface exif;
+    String titleName;
 
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://phoc-50746.appspot.com");
 
@@ -41,6 +44,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         //intent로 갤러리에서 선택한 사진URI 받기
         Intent intent = getIntent(); /*데이터 수신*/
         String imageUriString = intent.getStringExtra("imageUriString");
+        titleName =  intent.getStringExtra("titleName");
         selectedImageUri = Uri.parse(imageUriString);
         Log.e("전시화면에서 스트링Uri",imageUriString);
         Log.e("전시화면에서 Uri",selectedImageUri.toString());
@@ -53,6 +57,9 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
 
         upload = (Button)findViewById(R.id.uploadBtn);
         upload.setOnClickListener(this);
+
+        titleNameText = (TextView)findViewById(R.id.themeText);
+        titleNameText.setText("#"+titleName);
 
         //URI로 화면에 사진 뿌리기
         upload_image = (ImageView) findViewById(R.id.upload_image);

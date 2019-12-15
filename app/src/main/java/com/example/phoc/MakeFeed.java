@@ -3,10 +3,12 @@ package com.example.phoc;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,14 +19,25 @@ public class MakeFeed extends Fragment implements View.OnClickListener {
 
     Button fromGalleryBtn;
     Button takePhotoNowBtn;
+    TextView titleNameText;
     private final int GET_GALLERY_IMAGE = 200;
     Uri selectedImageUri;
     private final int REQUEST_CODE = 100;
+    String titleName;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.makefeed, container, false);
+
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            titleName = bundle.getString("titleName");
+            Log.e("titleName",titleName);
+            titleNameText = rootView.findViewById(R.id.titleName);
+            titleNameText.setVisibility(View.VISIBLE);
+            titleNameText.setText("#"+titleName);
+        }
 
         fromGalleryBtn = rootView.findViewById(R.id.fromGalleryBtn);
         takePhotoNowBtn = rootView.findViewById(R.id.takePhotoNowBtn);
@@ -44,7 +57,8 @@ public class MakeFeed extends Fragment implements View.OnClickListener {
             startActivityForResult(intent, GET_GALLERY_IMAGE);
         } else if (v == takePhotoNowBtn) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
+            intent.putExtra("titleName", titleName);
+            startActivity(intent);
         }
 
     }
@@ -57,6 +71,7 @@ public class MakeFeed extends Fragment implements View.OnClickListener {
             //선택사진URI 가지고 전시화면으로 이동
             Intent intent = new Intent(getActivity(), Upload.class);
             String UriToString = selectedImageUri.toString();
+            intent.putExtra("titleName", titleName);
             intent.putExtra("imageUriString", UriToString); /*송신*/
             startActivity(intent);
         }

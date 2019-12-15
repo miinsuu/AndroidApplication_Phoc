@@ -29,6 +29,7 @@
             android:layout_marginRight="30dp"
             android:textColor="#534837"
             android:textSize="15dp"
+            android:inputType="textEmailAddress"
             android:hint="등록하신 이메일 주소를 입력하여 주세요."
             android:textColorHint="#9B8281"
             />

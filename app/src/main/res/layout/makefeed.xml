@@ -15,6 +15,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/titleName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_marginBottom="70dp"
+                android:visibility="gone"/>
+
             <Button
                 android:id="@+id/fromGalleryBtn"
                 android:layout_width="200dp"

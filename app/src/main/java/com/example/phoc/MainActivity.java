@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar wbSeek;
     private boolean haveExif;
     Intent intent;
+    private String titleName;
     private static final String TAG = "MainActivity";
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray(4);
     static {
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         }else {
             // 권한이 있을 경우에만 layout을 전개한다.
             intent = getIntent(); /*데이터 수신*/
+            titleName =  intent.getStringExtra("titleName");
             if((intent.getStringExtra("Exif")) != null && (intent.getStringExtra("Exif")).equals("Exif"))
                 haveExif = true;
             initLayout();
@@ -602,6 +604,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, Upload.class);
             String UriToString = selectedImageUri.toString();
             intent.putExtra("imageUriString", UriToString); /*송신*/
+            intent.putExtra("titleName", titleName); /*송신*/
             startActivity(intent);
         }
     }

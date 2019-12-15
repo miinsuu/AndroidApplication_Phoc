@@ -1,14 +1,22 @@
 package com.example.phoc.TitleListActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.phoc.MakeFeed;
 import com.example.phoc.R;
+import com.example.phoc.Upload;
+import com.example.phoc.main;
 
 import java.util.ArrayList;
 
@@ -18,11 +26,13 @@ interface OnTitleListitemClickListener{
 public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdapter.ViewHolder> implements OnTitleListitemClickListener{
     ArrayList<TitleListItem> items = new ArrayList<TitleListItem>();
     OnTitleListitemClickListener listener;
+    static Context context;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        this.context = viewGroup.getContext();
         View itemView = inflater.inflate(R.layout.titlelist_item, viewGroup, false);
 
 
@@ -42,11 +52,24 @@ public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdap
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView title;
+        String titleName;
 
         public ViewHolder(@NonNull View itemView, final OnTitleListitemClickListener listener) {
             super(itemView);
 
             title = itemView.findViewById(R.id.particulartitle);
+
+            Button makeTitlePhotoBtn = itemView.findViewById(R.id.makeTitlePhotoBtn);
+            makeTitlePhotoBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("titleName", titleName);
+                    ((main) context).onFragmentSelected(5, bundle);
+                }
+            });
+
+
 
             itemView.setOnClickListener(new View.OnClickListener(){
 
@@ -62,6 +85,7 @@ public class TitleListItemAdapter extends RecyclerView.Adapter<TitleListItemAdap
 
         public void setItem(TitleListItem item){
             title.setText("# "+item.getTitle());
+            titleName = item.getTitle();
         }
     }
     public void setOnItemClickListenr(OnTitleListitemClickListener listener){
