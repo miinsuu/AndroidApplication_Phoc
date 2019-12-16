@@ -121,6 +121,8 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
 
              */
             startActivity(new Intent(this, main.class));
+
+            finish();
         }
     }
 }

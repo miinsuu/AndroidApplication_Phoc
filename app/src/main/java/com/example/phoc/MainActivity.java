@@ -631,6 +631,8 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("imageUriString", UriToString); /*송신*/
             intent.putExtra("titleName", titleName); /*송신*/
             startActivity(intent);
+
+            finish();
         }
     }
 

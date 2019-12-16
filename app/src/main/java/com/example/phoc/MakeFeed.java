@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -59,6 +60,11 @@ public class MakeFeed extends Fragment implements View.OnClickListener {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.putExtra("titleName", titleName);
             startActivity(intent);
+
+            //onDestroy();
+//            FragmentManager manager = getActivity().getSupportFragmentManager();
+//            manager.beginTransaction().remove(MakeFeed.this).commit();
+//            manager.popBackStack();
         }
 
     }
@@ -74,6 +80,11 @@ public class MakeFeed extends Fragment implements View.OnClickListener {
             intent.putExtra("titleName", titleName);
             intent.putExtra("imageUriString", UriToString); /*송신*/
             startActivity(intent);
+
+            //onDetach();
+//            FragmentManager manager = getActivity().getSupportFragmentManager();
+//            manager.beginTransaction().remove(MakeFeed.this).commit();
+//            manager.popBackStack();
         }
 
     }
