@@ -1,9 +1,11 @@
 package com.example.phoc.UserFeedActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Context;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.phoc.MainActivity;
 import com.example.phoc.R;
 
 import java.util.ArrayList;
@@ -64,6 +67,7 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
         TextView date;
         Context context;
         ImageView imgView;
+        ImageButton exifBtn;
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
@@ -71,14 +75,25 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
             comment = itemView.findViewById(R.id.inUserFeedComment);
             date = itemView.findViewById(R.id.inUserFeedDate);
             imgView = itemView.findViewById(R.id.imgView);
+            exifBtn = itemView.findViewById(R.id.userfeedExifSmallBtn);
         }
 
-        public void setItem(UserFeedItem item){
+        public void setItem(final UserFeedItem item){
             title.setText(item.getTitle());
             comment.setText(item.getComment());
             date.setText(item.getDate());
             Uri uri = Uri.parse(item.imgUri);
             Glide.with(context).load(uri).into(imgView);
+
+            exifBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("titleName", item.getTitle());
+                    intent.putExtra("exifJsonString", item.getExifJsonString());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

@@ -26,6 +26,7 @@ public class ParticularTitle extends Fragment{
         if (getArguments() != null) {
             theme = getArguments().getString("theme");
             Log.d(TAG, theme);
+            Log.e("주제",theme);
         }
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.particulartitle, container, false);
         recyclerView = rootView.findViewById(R.id.particulartitleRecyclerView);

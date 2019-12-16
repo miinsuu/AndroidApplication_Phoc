@@ -14,18 +14,29 @@ public class ParticularTitleItem {
     public String imgUrl;
     String postId;
     public String exifJsonString;
+    String title;
 
     public ParticularTitleItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
         JsonObject obj = ele.getAsJsonObject();
         Log.d("Post", obj.toString());
+        Log.e("주제여부확인", obj.get("theme").getAsString());
 
+        this.title = obj.get("theme").getAsString();
         this.comment = obj.get("content").getAsString();
         this.date = obj.get("createdAt").getAsString();
         this.userName = obj.get("nick").getAsString();
         this.userId = obj.get("userId").getAsString();
         this.imgUrl = obj.get("img").getAsString();
         this.exifJsonString = obj.get("camera").getAsString();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getExifJsonString() {
+        return exifJsonString;
     }
 
     public String getComment() {

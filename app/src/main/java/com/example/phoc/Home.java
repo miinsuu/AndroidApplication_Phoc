@@ -22,6 +22,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
     Button fromHome2MakeFeedBtn;
     TextView todayTheme;
+    String titleName;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,6 +42,9 @@ public class Home extends Fragment implements View.OnClickListener {
 
                 String name = element.getAsJsonObject().get("name").getAsString();
                 todayTheme.setText(jobj.get("name").toString());
+                titleName = jobj.get("name").toString();
+                int lastPoint = titleName.length();
+                titleName = titleName.substring(1, lastPoint-1);
             }
         });
 
@@ -50,6 +54,8 @@ public class Home extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        ((main)getActivity()).onFragmentSelected(5,null);
+        Bundle bundle = new Bundle();
+        bundle.putString("titleName", titleName);
+        ((main)getActivity()).onFragmentSelected(5,bundle);
     }
 }

@@ -13,6 +13,7 @@ public class SubscribeUserItem {
     public String date;
     public String imgUri;
     public String userId;
+    public String exifJsonString;
 
     public SubscribeUserItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
@@ -24,6 +25,11 @@ public class SubscribeUserItem {
         this.userName = obj.get("nick").getAsString();
         this.date = obj.get("createdAt").getAsString();
         this.imgUri = obj.get("img").getAsString();
+        this.exifJsonString = obj.get("camera").getAsString();
+    }
+
+    public String getExifJsonString() {
+        return exifJsonString;
     }
 
     public String getTitle() {

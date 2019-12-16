@@ -1,9 +1,11 @@
 package com.example.phoc.ParticularTitleActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.phoc.MainActivity;
 import com.example.phoc.R;
 
 import java.util.ArrayList;
@@ -66,23 +69,38 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
         TextView date;
         ImageView imgView;
         Context context;
+        ImageButton exifBtn;
 
-        public ViewHolder(@NonNull View itemView, Context context) {
+        public ViewHolder(@NonNull View itemView, final Context context) {
             super(itemView);
             this.context = context;
             comment = itemView.findViewById(R.id.inParticulartitleComment);
             userName = itemView.findViewById(R.id.fromParticularTitle2UserFeed);
             date = itemView.findViewById(R.id.intParticulartitleDate);
             imgView = itemView.findViewById(R.id.imgView);
+            exifBtn = itemView.findViewById(R.id.particulartitleExifSmallBtn);
+
         }
 
-        public void setItem(ParticularTitleItem item){
+        public void setItem(final ParticularTitleItem item){
             comment.setText(item.getComment());
             userName.setText(item.getUserName());
             date.setText(item.getDate());
             Uri uri = Uri.parse(item.imgUrl);
             Glide.with(context).load(uri).into(imgView);
+
+            exifBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("titleName", item.getTitle());
+                    intent.putExtra("exifJsonString", item.getExifJsonString());
+                    context.startActivity(intent);
+                }
+            });
         }
+
+
     }
 
     public void addItem(ParticularTitleItem item){

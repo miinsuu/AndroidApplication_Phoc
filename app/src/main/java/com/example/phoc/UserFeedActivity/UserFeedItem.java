@@ -24,6 +24,8 @@ public class UserFeedItem {
         this.imgUri = obj.get("img").getAsString();
     }
 
+    public String getExifJsonString() { return exifJsonString; }
+
     public String getTitle() {
         return title;
     }

@@ -18,10 +18,11 @@
             android:layout_height="40dp"
             android:background="#3F51B5"/>
         <ImageButton
+            android:id="@+id/subscribeuserExifSmallBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="#3F51B5"/>
+            android:background="@drawable/camera_button"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/imgView"

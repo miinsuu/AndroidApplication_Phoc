@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean haveExif;
     Intent intent;
     private String titleName;
+    private String exifJsonString;
     private static final String TAG = "MainActivity";
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray(4);
     static {
@@ -121,8 +122,12 @@ public class MainActivity extends AppCompatActivity {
             // 권한이 있을 경우에만 layout을 전개한다.
             intent = getIntent(); /*데이터 수신*/
             titleName =  intent.getStringExtra("titleName");
-            if((intent.getStringExtra("Exif")) != null && (intent.getStringExtra("Exif")).equals("Exif"))
+            if((intent.getStringExtra("exifJsonString")) != null)
+            {
                 haveExif = true;
+                exifJsonString = intent.getStringExtra("exifJsonString");
+            }
+
             initLayout();
         }
 
@@ -247,32 +252,52 @@ public class MainActivity extends AppCompatActivity {
 
         if(haveExif == true) {
             //exifbutton 클릭 시 사진의 uri를 가진 intent 도착
+            Log.e("받아온 exifJsonString",exifJsonString);
 
-            String imageUriString = intent.getStringExtra("imageUriString");
-            selectedImageUri = Uri.parse(imageUriString);
-
-            //사진에서 exif값 추출
+            JSONParser parser = new JSONParser();
+            Object obj = null;
             try {
-                exif = new ExifInterface(getPath(selectedImageUri));
-            } catch (IOException e) {
+                obj = parser.parse( exifJsonString );
+            } catch (ParseException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Exif Error!", Toast.LENGTH_LONG).show();
             }
+            JSONObject exifJson = (JSONObject) obj;
 
-            //사진옆 버튼 선택시, 해당사진의 설정값으로 설정되어 카메라실행
-            //플래시 설정
-            if (exif.getAttribute(TAG_FLASH).equals("1"))
-                flash_count = 1;
-            else if (exif.getAttribute(TAG_FLASH).equals("0"))
-                flash_count = 0;
-            //ISO 설정
-            if (!exif.getAttribute(TAG_ISO_SPEED_RATINGS).isEmpty())
-                iso = Integer.parseInt(exif.getAttribute(TAG_ISO_SPEED_RATINGS));
-            //exposure time(셔터스피드) 설정
-            if (!exif.getAttribute(TAG_EXPOSURE_TIME).isEmpty()) {
-                double temp = exif.getAttributeDouble(TAG_EXPOSURE_TIME, 0) * 1000000000l;
-                exposure = (long) temp;
-            }
+            String exposureStr = (String) exifJson.get("TAG_EXPOSURE_TIME");
+            String isoStr = (String) exifJson.get("TAG_ISO_SPEED_RATINGS");
+            String flashStr = (String) exifJson.get("TAG_FLASH");
+
+            exposure = Long.parseLong(exposureStr);
+            iso = Integer.parseInt(isoStr);
+            flash_count = Integer.parseInt(flashStr);
+            Log.e("json에서 추출한 exposure", exposureStr);
+            Log.e("json에서 추출한 iso", isoStr);
+            Log.e("json에서 추출한 flash", flashStr);
+//            String imageUriString = intent.getStringExtra("imageUriString");
+//            selectedImageUri = Uri.parse(imageUriString);
+//
+//            //사진에서 exif값 추출
+//            try {
+//                exif = new ExifInterface(getPath(selectedImageUri));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Toast.makeText(this, "Exif Error!", Toast.LENGTH_LONG).show();
+//            }
+//
+//            //사진옆 버튼 선택시, 해당사진의 설정값으로 설정되어 카메라실행
+//            //플래시 설정
+//            if (exif.getAttribute(TAG_FLASH).equals("1"))
+//                flash_count = 1;
+//            else if (exif.getAttribute(TAG_FLASH).equals("0"))
+//                flash_count = 0;
+//            //ISO 설정
+//            if (!exif.getAttribute(TAG_ISO_SPEED_RATINGS).isEmpty())
+//                iso = Integer.parseInt(exif.getAttribute(TAG_ISO_SPEED_RATINGS));
+//            //exposure time(셔터스피드) 설정
+//            if (!exif.getAttribute(TAG_EXPOSURE_TIME).isEmpty()) {
+//                double temp = exif.getAttributeDouble(TAG_EXPOSURE_TIME, 0) * 1000000000l;
+//                exposure = (long) temp;
+//            }
 
         }
          // 플래시 버튼 이벤트
