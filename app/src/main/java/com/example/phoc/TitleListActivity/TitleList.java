@@ -22,9 +22,7 @@ import com.google.gson.JsonParser;
 
 public class TitleList extends Fragment{
     RecyclerView recyclerView;
-    Button makeTitlePhotoBtn;
     String titleName;
-    View titleView;
 
     @Nullable
     @Override
@@ -52,20 +50,6 @@ public class TitleList extends Fragment{
             @Override
             public void onItemClick(TitleListItemAdapter.ViewHolder holder, View view, int position) {
                 ((main) getActivity()).onFragmentSelected(6, null);
-            }
-        });
-
-        final Bundle bundle = new Bundle();
-        bundle.putString("titleName", titleName);
-
-        titleView = getLayoutInflater().inflate(R.layout.titlelist_item, null);
-        makeTitlePhotoBtn = (Button)titleView.findViewById(R.id.makeTitlePhotoBtn);
-        makeTitlePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("버튼클릭확인 전",titleName);
-                ((main) getActivity()).onFragmentSelected(5, bundle);
-                Log.e("버튼클릭확인 후",titleName);
             }
         });
 
