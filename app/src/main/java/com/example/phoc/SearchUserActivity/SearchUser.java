@@ -50,23 +50,25 @@ public class SearchUser extends Fragment{
                     DatabaseQueryClass.User.findSimilarUserByNickname(inputText.getText().toString(), new DataListener() {
                         @Override
                         public void getData(Object data, String id) {
-                            JsonElement ele = new JsonParser().parse(data.toString());
-                            JsonObject obj = ele.getAsJsonObject();
-                            Log.d("Similar", obj.toString());
 
-                            adapter.addItem(new SearchUserItem(obj.get("nick").getAsString()));
+                            adapter.addItem(new SearchUserItem(data.toString(), id));
                             setAdapterToView(adapter);
+                            recyclerView.setAdapter(adapter);
+
                         }
                     });
                 }
             }
         });
-        recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnSearchUserItemClickListener() {
+            Bundle bundle = new Bundle();
             @Override
             public void onItemClick(SearchUserItemAdapter.ViewHolder holder, View view, int position) {
-                ((main) getActivity()).onFragmentSelected(7, null);
+                SearchUserItem item = adapter.getItem(position);
+                bundle.putString("userId", item.userId);
+                bundle.putString("nick", item.userName);
+                ((main) getActivity()).onFragmentSelected(7, bundle);
             }
         });
         return rootView;

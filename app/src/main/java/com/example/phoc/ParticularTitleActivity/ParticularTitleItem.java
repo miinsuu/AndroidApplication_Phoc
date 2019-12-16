@@ -1,14 +1,31 @@
 package com.example.phoc.ParticularTitleActivity;
 
+import android.util.Log;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class ParticularTitleItem {
     String comment;
     String userName;
     String date;
+    public String userId;
+    public String imgUrl;
+    String postId;
+    public String exifJsonString;
 
-    public ParticularTitleItem(String comment, String userName, String date) {
-        this.comment = comment;
-        this.userName = userName;
-        this.date = date;
+    public ParticularTitleItem(String json, String id) {
+        JsonElement ele = new JsonParser().parse(json);
+        JsonObject obj = ele.getAsJsonObject();
+        Log.d("Post", obj.toString());
+
+        this.comment = obj.get("content").getAsString();
+        this.date = obj.get("createdAt").getAsString();
+        this.userName = obj.get("nick").getAsString();
+        this.userId = obj.get("userId").getAsString();
+        this.imgUrl = obj.get("img").getAsString();
+        this.exifJsonString = obj.get("camera").getAsString();
     }
 
     public String getComment() {

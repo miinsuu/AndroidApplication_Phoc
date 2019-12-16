@@ -1,28 +1,33 @@
 package com.example.phoc.ParticularTitleActivity;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.phoc.R;
 
 import java.util.ArrayList;
+import android.content.Context;
 
 public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitleAdapter.ViewHolder> {
     ArrayList<ParticularTitleItem> items = new ArrayList<ParticularTitleItem>();
-
+    Context context;
     public interface OnItemClickListener{
-        public  void onItemClick(View view, int position, int type);
+        public  void onItemClick(ParticularTitleItem item, int type);
     }
 
     private OnItemClickListener onItemClickListener;
 
-    public ParticularTitleAdapter(OnItemClickListener onItemClickListener){
+    public ParticularTitleAdapter(OnItemClickListener onItemClickListener, Context context){
         this.onItemClickListener = onItemClickListener;
+        this.context = context;
     }
 
     @NonNull
@@ -31,7 +36,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.particulartitle_item, viewGroup, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, this.context);
     }
 
     @Override
@@ -41,7 +46,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
             @Override
             public void onClick(View v) {
                 //viewType1은 TextView인 userName
-                onItemClickListener.onItemClick(v, position, 1);
+                onItemClickListener.onItemClick(items.get(position), 1);
             }
         });
 
@@ -59,19 +64,24 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
         TextView comment;
         TextView userName;
         TextView date;
+        ImageView imgView;
+        Context context;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-
+            this.context = context;
             comment = itemView.findViewById(R.id.inParticulartitleComment);
             userName = itemView.findViewById(R.id.fromParticularTitle2UserFeed);
             date = itemView.findViewById(R.id.intParticulartitleDate);
+            imgView = itemView.findViewById(R.id.imgView);
         }
 
         public void setItem(ParticularTitleItem item){
             comment.setText(item.getComment());
             userName.setText(item.getUserName());
             date.setText(item.getDate());
+            Uri uri = Uri.parse(item.imgUrl);
+            Glide.with(context).load(uri).into(imgView);
         }
     }
 

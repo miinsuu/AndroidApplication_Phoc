@@ -21,7 +21,7 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
     Context context;
 
     public interface OnItemClickListener{
-        public  void onItemClick(View view, int position, int type);
+        public  void onItemClick(SubscribeUserItem item, int type);
     }
 
     private OnItemClickListener onItemClickListener;
@@ -47,14 +47,14 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
             @Override
             public void onClick(View v) {
                 //viewType1은 TextView인 userName
-                onItemClickListener.onItemClick(v, position, 1);
+                onItemClickListener.onItemClick(items.get(position), 1);
             }
         });
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //viewType2은 TextView인 title
-                onItemClickListener.onItemClick(v, position, 2);
+                onItemClickListener.onItemClick(items.get(position), 2);
             }
         });
 

@@ -54,6 +54,7 @@ public class DatabaseQueryClass {
         });
     }
     */
+
     public static class Theme{
         public static void getTodayTheme(final DataListener dataListener){
             Log.d("Theme", "getTodayTheme called");
@@ -233,11 +234,11 @@ public class DatabaseQueryClass {
 
 
     }
-    public static class User{
-        public static void subscribe(String userId, String followingId){
-            Map<String, Object> subscribing  = new HashMap<>();
+    public static class User {
+        public static void subscribe(String userId, String followingId) {
+            Map<String, Object> subscribing = new HashMap<>();
             subscribing.put("followerId", userId);
-            subscribing.put("followingId",followingId );
+            subscribing.put("followingId", followingId);
 
 
             db.collection("subscribe")
@@ -255,39 +256,40 @@ public class DatabaseQueryClass {
                         }
                     });
         }
-        public static void cancelSubscribe(String userId, String followingId){
 
-          db.collection("subscribe")
-                  .whereEqualTo("followerId", userId)
-                  .whereEqualTo("followingId", followingId)
-                  .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-              @Override
-              public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                  if (task.isSuccessful()) {
-                      for (QueryDocumentSnapshot document : task.getResult()) {
-                          db.collection("subscribe").document(document.getId())
-                                  .delete()
-                                  .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                      @Override
-                                      public void onSuccess(Void aVoid) {
-                                          Log.d("subscribe", "DocumentSnapshot successfully deleted!");
-                                      }
-                                  })
-                                  .addOnFailureListener(new OnFailureListener() {
-                                      @Override
-                                      public void onFailure(@NonNull Exception e) {
-                                          Log.w("subscribe", "Error deleting document", e);
-                                      }
-                                  });
-                      }
-                  } else {
-                      Log.d("subscribe", "Error getting documents: ", task.getException());
-                  }
-              }
-          });
+        public static void cancelSubscribe(String userId, String followingId) {
+
+            db.collection("subscribe")
+                    .whereEqualTo("followerId", userId)
+                    .whereEqualTo("followingId", followingId)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            db.collection("subscribe").document(document.getId())
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("subscribe", "DocumentSnapshot successfully deleted!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w("subscribe", "Error deleting document", e);
+                                        }
+                                    });
+                        }
+                    } else {
+                        Log.d("subscribe", "Error getting documents: ", task.getException());
+                    }
+                }
+            });
         }
 
-        public static void getUserInfoByEmail(final String email, final DataListener dataListener){
+        public static void getUserInfoByEmail(final String email, final DataListener dataListener) {
             db.collection("users")
                     .whereEqualTo("email", email)
                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -303,7 +305,7 @@ public class DatabaseQueryClass {
 
                             data = new Gson().toJson(jobj);
                         }
-                        if(data!=null)
+                        if (data != null)
                             dataListener.getData(data, null);
                     } else {
                         Log.d("user", "Error getting documents: ", task.getException());
@@ -311,7 +313,8 @@ public class DatabaseQueryClass {
                 }
             });
         }
-        public static void findSimilarUserByNickname(String nick, final DataListener dataListener){
+
+        public static void findSimilarUserByNickname(String nick, final DataListener dataListener) {
             Log.d("Similar", "findSmilarUser called");
             db.collection("users").orderBy("nick").startAt().startAt(nick).endAt(nick + "\uf8ff")
                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -320,13 +323,45 @@ public class DatabaseQueryClass {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String json = new Gson().toJson(document.getData());
 
-                        dataListener.getData(json, null);
+                        dataListener.getData(json, document.getId());
                     }
                 }
             });
 
         }
+
+        public static void getSusbscribings(final DataListener dataListener) {
+            Log.d("subscribe", "get subs called");
+            db.collection("subscribe").whereEqualTo("followerId", MySession.getSession().getUserId())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String json = new Gson().toJson(document.getData());
+                                JsonElement ele = new JsonParser().parse(json);
+                                final JsonObject obj = ele.getAsJsonObject();
+                                Log.d("subscribe", obj.toString());
+
+                                CollectionReference userRef = db.collection("users");
+                                userRef.document(obj.get("followingId").getAsString())
+                                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d("subscribe", task.getResult().getData().toString());
+                                            dataListener.getData( new Gson().toJson(task.getResult().getData()), obj.get("followingId").getAsString());
+
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+        }
+        private static void findNicknameByUserId(String userId, final DataListener dataListener){
+
+        }
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.example.phoc.SearchUserActivity;
+package com.example.phoc.SubscribeUserListActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,26 +11,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.phoc.R;
 
 import java.util.ArrayList;
+import android.content.Context;
 
-interface  OnSearchUserItemClickListener{
-    public void onItemClick(SearchUserItemAdapter.ViewHolder holder, View view, int position);
+interface OnSubscribeUserListItemClickListener {
+    public void onItemClick(SubscribeUserListItemAdapter.ViewHolder holder, View view, int position);
 }
-public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAdapter.ViewHolder> implements OnSearchUserItemClickListener{
-    public ArrayList<SearchUserItem> items = new ArrayList<SearchUserItem>();
-    OnSearchUserItemClickListener listener;
+public class SubscribeUserListItemAdapter extends RecyclerView.Adapter<SubscribeUserListItemAdapter.ViewHolder> implements OnSubscribeUserListItemClickListener{
+    public ArrayList<SubscribeUserListItem> items = new ArrayList<SubscribeUserListItem>();
+    OnSubscribeUserListItemClickListener listener;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.searchuser_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.subscribeuserlist_item, viewGroup, false);
+
 
         return new ViewHolder(itemView, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        SearchUserItem item = items.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
+        SubscribeUserListItem item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -42,10 +44,9 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView userName;
 
-        public ViewHolder(@NonNull View itemView, final OnSearchUserItemClickListener listener) {
+        public ViewHolder(@NonNull View itemView, final OnSubscribeUserListItemClickListener listener) {
             super(itemView);
-
-            userName = itemView.findViewById(R.id.UserName);
+            userName = itemView.findViewById(R.id.particularSubscribeUser);
 
             itemView.setOnClickListener(new View.OnClickListener(){
 
@@ -59,13 +60,11 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
             });
         }
 
-        public void setItem(SearchUserItem item){
-            userName.setText(item.getUserName());
+        public void setItem(SubscribeUserListItem item){
+            userName.setText("# "+item.getUserName());
         }
     }
-
-
-    public void  setOnItemClickListener(OnSearchUserItemClickListener listener){
+    public void setOnItemClickListenr(OnSubscribeUserListItemClickListener listener){
         this.listener = listener;
     }
     @Override
@@ -74,22 +73,20 @@ public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAd
             listener.onItemClick(holder, view, position);
         }
     }
-    public void clear(){
-        items.clear();
+
+    public void addItem(SubscribeUserListItem item){
+        items.add(item);
     }
 
-    public void addItem(SearchUserItem item){ items.add(item); }
-
-    public void setItems(ArrayList<SearchUserItem> items){
+    public void setItems(ArrayList<SubscribeUserListItem> items){
         this.items = items;
     }
 
-    public SearchUserItem getItem(int position){
+    public SubscribeUserListItem getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, SearchUserItem item){
+    public void setItem(int position, SubscribeUserListItem item){
         items.set(position, item);
     }
-
 }

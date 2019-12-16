@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="홈" />
         <item
+            android:id="@+id/menu6"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="구독중인 작가들" />
+        <item
             android:id="@+id/menu2"
             android:icon="@drawable/ic_menu_camera"
             android:title="구독중인 작가들 작품" />

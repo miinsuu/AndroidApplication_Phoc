@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,9 +23,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
 
 public class Myfeed extends Fragment{
     RecyclerView recyclerView;
+    final String TAG = "myFeed";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,11 +40,17 @@ public class Myfeed extends Fragment{
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
+
         final MyFeedItemAdapter adapter = new MyFeedItemAdapter(new MyFeedItemAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position, int viewType) {
+            public void onItemClick(MyFeedItem item, int viewType) {
                 if(viewType == 1) { //viewType1은 TextView인 title
-                    ((main) getActivity()).onFragmentSelected(6, null);
+                    Log.d(TAG,item.title);
+
+                    Bundle args = new Bundle();
+                    args.putString("theme", item.title);
+
+                    ((main) getActivity()).onFragmentSelected(6, args);
                 }
             }
         }, getContext());
@@ -47,18 +59,7 @@ public class Myfeed extends Fragment{
         DatabaseQueryClass.Post.getPostsByUserId(MySession.getSession().getUserId(), new DataListener() {
             @Override
             public void getData(Object json, String postId) {
-
-                JsonElement ele = new JsonParser().parse(json.toString());
-                JsonObject obj = ele.getAsJsonObject();
-                Log.d("Post", obj.toString());
-
-                String title = obj.get("theme").getAsString();
-                String comment = obj.get("content").getAsString();
-                String date= obj.get("createdAt").getAsString();
-                String imgUri = obj.get("img").getAsString();
-                String id = postId;
-
-                adapter.addItem(new MyFeedItem(postId, title, comment, date, imgUri));
+                adapter.addItem(new MyFeedItem(postId, json.toString()));
                 setAdapterToView(adapter);
             }
         });
