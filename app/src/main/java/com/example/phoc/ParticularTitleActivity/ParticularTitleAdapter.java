@@ -52,6 +52,13 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
                 onItemClickListener.onItemClick(items.get(position), 1);
             }
         });
+        holder.phocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //viewType2은 ImageButton인 phoc
+                onItemClickListener.onItemClick(items.get(position), 2);
+            }
+        });
 
         ParticularTitleItem item = items.get(position);
         viewHolder.setItem(item);
@@ -70,6 +77,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
         ImageView imgView;
         Context context;
         ImageButton exifBtn;
+        ImageButton phocBtn;
 
         public ViewHolder(@NonNull View itemView, final Context context) {
             super(itemView);
@@ -79,6 +87,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
             date = itemView.findViewById(R.id.intParticulartitleDate);
             imgView = itemView.findViewById(R.id.imgView);
             exifBtn = itemView.findViewById(R.id.particulartitleExifSmallBtn);
+            phocBtn = itemView.findViewById(R.id.phocInParticulartitle);
 
         }
 

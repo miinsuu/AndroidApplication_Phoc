@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,10 @@ public class UserFeed extends Fragment{
                     Bundle bundle = new Bundle();
                     bundle.putString("theme",item.title );
                     ((main) getActivity()).onFragmentSelected(6, bundle);
+                }
+                else if(viewType ==2) { //viewType2는 imageButton인 phocBtn
+                    //phoc버튼 눌렀을 때 실행할 내용
+                    Toast.makeText(getActivity(), "phoc!", Toast.LENGTH_LONG).show();
                 }
             }
         },getActivity());

@@ -51,6 +51,13 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
                 onItemClickListener.onItemClick(items.get(position), 1);
             }
         });
+        holder.phocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //viewType2는 imageButton인 phocBtn
+                onItemClickListener.onItemClick(items.get(position), 2);
+            }
+        });
 
         UserFeedItem item = items.get(position);
         viewHolder.setItem(item);
@@ -68,6 +75,8 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
         Context context;
         ImageView imgView;
         ImageButton exifBtn;
+        ImageButton phocBtn;
+
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this.context = context;
@@ -76,6 +85,7 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
             date = itemView.findViewById(R.id.inUserFeedDate);
             imgView = itemView.findViewById(R.id.imgView);
             exifBtn = itemView.findViewById(R.id.userfeedExifSmallBtn);
+            phocBtn = itemView.findViewById(R.id.phocInUserfeed);
         }
 
         public void setItem(final UserFeedItem item){

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,6 +42,9 @@ public class ParticularTitle extends Fragment{
                     bundle.putString("nick", item.userName);
 
                     ((main) getActivity()).onFragmentSelected(7, bundle);
+                }
+                else if(viewType == 2){ //viewType2는 imageButton인 phocBtn
+                    Toast.makeText(getActivity(), "phoc!", Toast.LENGTH_LONG).show();
                 }
             }
         },getContext());
