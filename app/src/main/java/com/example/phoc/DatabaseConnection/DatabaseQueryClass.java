@@ -237,6 +237,7 @@ public class DatabaseQueryClass {
 
     }
     public static class User {
+
         public static void subscribe(String userId, String followingId) {
             Map<String, Object> subscribing = new HashMap<>();
             subscribing.put("followerId", userId);
@@ -257,6 +258,21 @@ public class DatabaseQueryClass {
                             Log.w("subscribe", "Error adding document", e);
                         }
                     });
+        }
+        public static void isSubscribed(String userId, final DataListener dataListener){
+            db.collection("subscribe")
+                    .whereEqualTo("followerId", MySession.getSession().getUserId())
+                    .whereEqualTo("followingId", userId)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    boolean isSubscrieflag = false;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        isSubscrieflag = true;
+                    }
+                    dataListener.getData(isSubscrieflag, null);
+                }
+            });
         }
 
         public static void cancelSubscribe(String userId, String followingId) {

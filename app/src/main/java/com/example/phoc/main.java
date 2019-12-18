@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,7 +16,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
 import com.example.phoc.MyFeedActivity.Myfeed;
+import com.example.phoc.MySession.MySession;
 import com.example.phoc.ParticularTitleActivity.ParticularTitle;
 import com.example.phoc.SearchUserActivity.SearchUser;
 import com.example.phoc.SubscribeUserActivity.SubscribeUser;
@@ -39,6 +43,8 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
     Toolbar toolbar;
     Button subscribebtn;
 
+    String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +55,24 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
 
         //구독버튼 눌렀을 때
         subscribebtn = findViewById(R.id.subscribeBtn);
+
         subscribebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subscribebtn.setBackgroundColor(Color.RED);
+                Log.d("subsc", "subcribe called");
+                if(subscribebtn.getText().toString() == "구독하기"){
+                    Toast myToast = Toast.makeText(getApplicationContext(),"구독 완료!", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    subscribebtn.setBackgroundColor(Color.RED);
+                    subscribebtn.setText("구독취소");
+                    DatabaseQueryClass.User.subscribe(MySession.getSession().getUserId(), userId);
+                }else {
+                    Toast myToast = Toast.makeText(getApplicationContext(),"구독 취소!", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    subscribebtn.setBackgroundColor(Color.DKGRAY);
+                    subscribebtn.setText("구독하기");
+                    DatabaseQueryClass.User.cancelSubscribe(MySession.getSession().getUserId(), userId);
+                }
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -148,7 +168,22 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         } else if(position == 7) {
             curFragment = userFeed;
             toolbar.setTitle(bundle.get("nick").toString() + "의 갤러리");
-            subscribebtn.setVisibility(View.VISIBLE);
+            userId = bundle.get("userId").toString();
+
+            DatabaseQueryClass.User.isSubscribed(userId, new DataListener() {
+                @Override
+                public void getData(Object data, String id) {
+                    boolean flag = (boolean)data;
+                    if(flag){
+                        subscribebtn.setBackgroundColor(Color.RED);
+                        subscribebtn.setText("구독취소");
+                    }else{
+                        subscribebtn.setBackgroundColor(Color.DKGRAY);
+                        subscribebtn.setText("구독하기");
+                    }
+                    subscribebtn.setVisibility(View.VISIBLE);
+                }
+            });
         } else if(position == 8) {
             curFragment = subscribeUserList;
             toolbar.setTitle("구독중인 유저들");
