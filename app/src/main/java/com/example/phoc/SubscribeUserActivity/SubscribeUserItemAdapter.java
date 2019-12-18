@@ -86,6 +86,7 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
         ImageButton exifBtn;
         ImageButton phocBtn;
         Context context;
+        TextView phocNum;
 
         public ViewHolder(View itemView, Context context){
             super(itemView);
@@ -97,6 +98,7 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
             imgView = itemView.findViewById(R.id.imgView);
             exifBtn = itemView.findViewById(R.id.subscribeuserExifSmallBtn);
             phocBtn = itemView.findViewById(R.id.phocInSubscribeuser);
+            phocNum = itemView.findViewById(R.id.phocNumInSubscribeuser);
             this.context = context;
         }
 

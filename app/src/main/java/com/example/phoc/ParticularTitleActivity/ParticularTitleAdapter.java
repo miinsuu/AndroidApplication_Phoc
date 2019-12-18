@@ -78,6 +78,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
         Context context;
         ImageButton exifBtn;
         ImageButton phocBtn;
+        TextView phocNum;
 
         public ViewHolder(@NonNull View itemView, final Context context) {
             super(itemView);
@@ -88,6 +89,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
             imgView = itemView.findViewById(R.id.imgView);
             exifBtn = itemView.findViewById(R.id.particulartitleExifSmallBtn);
             phocBtn = itemView.findViewById(R.id.phocInParticulartitle);
+            phocNum = itemView.findViewById(R.id.phocNumInParticulartitle);
 
         }
 

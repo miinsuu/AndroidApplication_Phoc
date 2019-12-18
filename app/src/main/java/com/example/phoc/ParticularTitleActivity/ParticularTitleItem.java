@@ -10,11 +10,13 @@ public class ParticularTitleItem {
     String comment;
     String userName;
     String date;
+    String phocNum;
     public String userId;
     public String imgUrl;
     String postId;
     public String exifJsonString;
     String title;
+
 
     public ParticularTitleItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
@@ -61,5 +63,13 @@ public class ParticularTitleItem {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getPhocNum() {
+        return phocNum;
+    }
+
+    public void setPhocNum(String phocNum) {
+        this.phocNum = phocNum;
     }
 }

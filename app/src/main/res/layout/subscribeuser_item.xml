@@ -13,11 +13,23 @@
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:gravity="right">
-        <ImageButton
-            android:id="@+id/phocInSubscribeuser"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="#3F51B5"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/phocInSubscribeuser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#3F51B5"/>
+            <TextView
+                android:id="@+id/phocNumInSubscribeuser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="000"
+                android:layout_alignBottom="@+id/phocInSubscribeuser"
+                android:layout_alignRight="@+id/phocInSubscribeuser"/>
+        </RelativeLayout>
+
         <ImageButton
             android:id="@+id/subscribeuserExifSmallBtn"
             android:layout_width="40dp"
