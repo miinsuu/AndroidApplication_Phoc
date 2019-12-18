@@ -203,7 +203,7 @@ public class DatabaseQueryClass {
         public static void createPost(final String cameraSettingJson,
                                       final String content,
                                       final String imgUrl,
-                                      final String theme)
+                                      final String theme, final MyOnSuccessListener myOnSuccessListener)
         {
             Map<String, Object> post  = new HashMap<>();
             post.put("camera", cameraSettingJson);
@@ -214,20 +214,22 @@ public class DatabaseQueryClass {
             post.put("num_phoc", 0);
             post.put("userId", MySession.getSession().getUserId());
             post.put("nick", MySession.getSession().getUserNick());
-            //userId 추가할것
+
+            Log.d("uploadd", post.toString());
 
             db.collection("posts")
                     .add(post)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            Log.d("Post", "DocumentSnapshot added with ID: " + documentReference.getId());
+                            Log.d("uploadd", "create post upload success " + documentReference.getId());
+                            myOnSuccessListener.onSuccess();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w("Post", "Error adding document", e);
+                            Log.w("uploadd", "Error adding document", e);
                         }
                     });
         }
