@@ -1,6 +1,7 @@
 package com.example.phoc.DatabaseConnection;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -114,40 +115,7 @@ public class DatabaseQueryClass {
                 }
             });
         }
-        /*
-        public static void getPostsByNickname(String nickname, final DataListListener dataListener){
-            Log.d("Post", "by nick called");
-            findUserIdByNickname(nickname, new DataListener() {
-                @Override
-                public void getData(Object userId) {
-                    CollectionReference postRef = db.collection("posts");
-                    Query query = postRef.whereEqualTo("userId", userId);
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            ArrayList<JsonObject> dataList = new ArrayList<JsonObject>();
-
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("Post", document.getId() + " => " + document.getData());
-
-                                    String json = new Gson().toJson(document.getData());
-                                    JsonElement element = new JsonParser().parse(json);
-                                    JsonObject jobj = element.getAsJsonObject();
-
-                                    dataList.add(jobj);
-                                }
-                                dataListener.getData(dataList, document.getId());
-                            } else {
-                                Log.d("Post", "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
-                }
-            });
-        }
-        */
         public static void getPostsByUserId(final String userId, final DataListener dataListener){
             Log.d("Post", "by userId called");
             CollectionReference postRef = db.collection("posts");
@@ -168,22 +136,22 @@ public class DatabaseQueryClass {
             });
         }
 
-        public static void getPostBySubscribing(String follower, final DataListener dataListener){
+        public static void getPostBySubscribing(String follower, final DataListener dataListener) {
             Log.d("subsc", follower.toString());
             db.collection("subscribe").whereEqualTo("followerId", follower)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            Log.d("subsc" , "onCompleete called");
+                            Log.d("subsc", "onCompleete called");
                             ArrayList<String> followings = new ArrayList<String>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 followings.add(document.getData().get("followingId").toString());
                             }
-                            Log.d("subsc" , followings.toString());
+                            Log.d("subsc", followings.toString());
                             CollectionReference postsRef = db.collection("posts");
 
-                            for(String element : followings){
+                            for (String element : followings) {
                                 Log.d("subsc", "e :" + element);
                                 postsRef.whereEqualTo("userId", element).get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -233,7 +201,23 @@ public class DatabaseQueryClass {
                         }
                     });
         }
-
+        public static void deletePost(String postId, final MyOnSuccessListener myOnSuccessListener){
+            db.collection("posts").document(postId)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("del", "DocumentSnapshot successfully deleted!");
+                            myOnSuccessListener.onSuccess();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("del", "Error deleting document", e);
+                        }
+                    });
+        }
 
     }
     public static class User {
@@ -376,9 +360,6 @@ public class DatabaseQueryClass {
                             }
                         }
                     });
-
-        }
-        private static void findNicknameByUserId(String userId, final DataListener dataListener){
 
         }
     }
