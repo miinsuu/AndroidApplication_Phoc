@@ -60,6 +60,13 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
                 onItemClickListener.onItemClick(items.get(position), 2);
             }
         });
+        holder.phocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //viewType3은 imageButton인 phocBtn
+                onItemClickListener.onItemClick(items.get(position), 3);
+            }
+        });
 
         SubscribeUserItem item = items.get(position);
         viewHolder.setItem(item);
@@ -77,6 +84,7 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
         TextView date;
         ImageView imgView;
         ImageButton exifBtn;
+        ImageButton phocBtn;
         Context context;
 
         public ViewHolder(View itemView, Context context){
@@ -88,6 +96,7 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
             date = itemView.findViewById(R.id.inSubscribeuserDate);
             imgView = itemView.findViewById(R.id.imgView);
             exifBtn = itemView.findViewById(R.id.subscribeuserExifSmallBtn);
+            phocBtn = itemView.findViewById(R.id.phocInSubscribeuser);
             this.context = context;
         }
 

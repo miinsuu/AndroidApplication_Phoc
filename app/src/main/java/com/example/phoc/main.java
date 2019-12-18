@@ -1,8 +1,11 @@
 package com.example.phoc;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -34,6 +37,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
     SubscribeUserList subscribeUserList;
 
     Toolbar toolbar;
+    Button subscribebtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,14 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //구독버튼 눌렀을 때
+        subscribebtn = findViewById(R.id.subscribeBtn);
+        subscribebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subscribebtn.setBackgroundColor(Color.RED);
+            }
+        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,31 +119,40 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         if (position == 0) {
             curFragment = home;
             toolbar.setTitle("오늘의 주제");
+            subscribebtn.setVisibility(View.GONE);
         } else if(position == 1) {
             curFragment = subscribeUser;
             toolbar.setTitle("구독작가들의 작품");
+            subscribebtn.setVisibility(View.GONE);
         } else if(position == 2) {
             curFragment = titleList;
             toolbar.setTitle("주제 목록");
+            subscribebtn.setVisibility(View.GONE);
         } else if(position == 3) {
             curFragment = searchUser;
             toolbar.setTitle("작가 검색");
+            subscribebtn.setVisibility(View.GONE);
         } else if(position == 4) {
             curFragment = myfeed;
             toolbar.setTitle("내 작품");
+            subscribebtn.setVisibility(View.GONE);
         } else if(position == 5) {
             curFragment = makefeed;
             curFragment.setArguments(bundle);
             toolbar.setTitle("작품 만들기");
+            subscribebtn.setVisibility(View.GONE);
         } else if(position == 6) {
             curFragment = particularTitle;
             toolbar.setTitle("#" + bundle.get("theme").toString());
+            subscribebtn.setVisibility(View.GONE);
         } else if(position == 7) {
             curFragment = userFeed;
             toolbar.setTitle(bundle.get("nick").toString() + "의 갤러리");
+            subscribebtn.setVisibility(View.VISIBLE);
         } else if(position == 8) {
             curFragment = subscribeUserList;
             toolbar.setTitle("구독중인 유저들");
+            subscribebtn.setVisibility(View.GONE);
         }
         if(bundle != null){
             curFragment.setArguments(bundle);
