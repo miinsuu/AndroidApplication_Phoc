@@ -13,6 +13,7 @@ public class MyFeedItem {
     public String Date;
     public String imgUri;
     public String exifJsonString;
+    public String phocNum;
 
     public MyFeedItem(String postId, String json) {
         JsonElement ele = new JsonParser().parse(json);
@@ -61,4 +62,11 @@ public class MyFeedItem {
 
     public String getPostId(){return this.postId;}
 
+    public String getPhocNum() {
+        return phocNum;
+    }
+
+    public void setPhocNum(String phocNum) {
+        this.phocNum = phocNum;
+    }
 }

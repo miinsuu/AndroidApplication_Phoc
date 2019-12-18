@@ -65,6 +65,7 @@ public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.Vi
         TextView date;
         ImageView imgView;
         Context context;
+        TextView phocNum;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
@@ -74,6 +75,7 @@ public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.Vi
             comment = itemView.findViewById(R.id.inMyFeedComment);
             date = itemView.findViewById(R.id.inMyFeedDate);
             imgView = itemView.findViewById(R.id.imgView);
+            phocNum = itemView.findViewById(R.id.phocNumInMyfeed);
         }
 
         public void setItem(MyFeedItem item){
