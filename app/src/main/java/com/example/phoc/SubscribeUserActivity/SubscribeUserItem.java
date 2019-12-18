@@ -14,6 +14,7 @@ public class SubscribeUserItem {
     public String imgUri;
     public String userId;
     public String exifJsonString;
+    public String phocNum;
 
     public SubscribeUserItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
@@ -66,4 +67,11 @@ public class SubscribeUserItem {
 
     public String getImgUri(){ return this.imgUri;}
 
+    public String getPhocNum() {
+        return phocNum;
+    }
+
+    public void setPhocNum(String phocNum) {
+        this.phocNum = phocNum;
+    }
 }

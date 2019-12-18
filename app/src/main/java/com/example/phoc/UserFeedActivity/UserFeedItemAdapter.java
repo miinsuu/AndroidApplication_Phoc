@@ -76,6 +76,7 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
         ImageView imgView;
         ImageButton exifBtn;
         ImageButton phocBtn;
+        TextView phocNum;
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -86,6 +87,7 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
             imgView = itemView.findViewById(R.id.imgView);
             exifBtn = itemView.findViewById(R.id.userfeedExifSmallBtn);
             phocBtn = itemView.findViewById(R.id.phocInUserfeed);
+            phocNum = itemView.findViewById(R.id.phocNumInUserfeed);
         }
 
         public void setItem(final UserFeedItem item){

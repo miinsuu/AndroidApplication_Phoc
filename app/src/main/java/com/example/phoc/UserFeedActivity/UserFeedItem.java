@@ -12,6 +12,7 @@ public class UserFeedItem {
     public String date;
     public String exifJsonString;
     public String imgUri;
+    public String phocNum;
 
     public UserFeedItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
@@ -48,5 +49,13 @@ public class UserFeedItem {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getPhocNum() {
+        return phocNum;
+    }
+
+    public void setPhocNum(String phocNum) {
+        this.phocNum = phocNum;
     }
 }
