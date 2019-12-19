@@ -9,6 +9,8 @@
         android:id="@+id/particulartitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:text="주제"
         android:textStyle="bold"
         android:textSize="25dp"
@@ -30,6 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold"
+            android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="작품 올리기"/>
     </LinearLayout>
 

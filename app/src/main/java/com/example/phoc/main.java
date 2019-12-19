@@ -2,6 +2,8 @@ package com.example.phoc;
 
 import android.graphics.Color;
 import android.graphics.ColorSpace;
+import android.graphics.Typeface;
+import android.graphics.fonts.FontFamily;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -127,6 +129,8 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             onFragmentSelected(4, null);
         } else if(id == R.id.menu6) {
             onFragmentSelected(8, null);
+        } else if(id == R.id.menu7) {
+            //여기에 로그아웃하는 코드
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -189,7 +193,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             });
         } else if(position == 8) {
             curFragment = subscribeUserList;
-            toolbar.setTitle("구독중인 유저들");
+            toolbar.setTitle("구독중인 작가들");
             subscribebtn.setVisibility(View.GONE);
         }
         if(bundle != null){

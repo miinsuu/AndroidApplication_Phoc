@@ -30,6 +30,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity = "right|center"
                     android:textStyle="bold"
+                    android:textColor="#9B8281"
+                    android:fontFamily="@font/myeongjo"
                     android:background="@drawable/buttonshape"
                     android:layout_marginRight="10dp"
                     android:visibility="gone"

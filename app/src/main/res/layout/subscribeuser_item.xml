@@ -52,6 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:text="#주제"
         android:textSize="24dp" />
     <TextView
@@ -59,6 +61,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:text="짧은 한줄의 작품 소개"
         android:textSize="17dp" />
     <LinearLayout
@@ -71,6 +75,8 @@
             android:id="@+id/fromSubscribeUser2UserFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="작가이름"
             android:textSize="15dp"
             />
@@ -79,6 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="2019.10.09"
             android:textSize="15dp"
             android:layout_marginLeft="20dp"/>
