@@ -1,6 +1,7 @@
 package com.example.phoc;
 
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -63,13 +64,13 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
                 if(subscribebtn.getText().toString() == "구독하기"){
                     Toast myToast = Toast.makeText(getApplicationContext(),"구독 완료!", Toast.LENGTH_SHORT);
                     myToast.show();
-                    subscribebtn.setBackgroundColor(Color.RED);
+                    subscribebtn.setTextColor(Color.RED);
                     subscribebtn.setText("구독취소");
                     DatabaseQueryClass.User.subscribe(MySession.getSession().getUserId(), userId);
                 }else {
                     Toast myToast = Toast.makeText(getApplicationContext(),"구독 취소!", Toast.LENGTH_SHORT);
                     myToast.show();
-                    subscribebtn.setBackgroundColor(Color.DKGRAY);
+                    subscribebtn.setTextColor(Color.WHITE);
                     subscribebtn.setText("구독하기");
                     DatabaseQueryClass.User.cancelSubscribe(MySession.getSession().getUserId(), userId);
                 }
@@ -175,10 +176,10 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
                 public void getData(Object data, String id) {
                     boolean flag = (boolean)data;
                     if(flag){
-                        subscribebtn.setBackgroundColor(Color.RED);
+                        subscribebtn.setTextColor(Color.RED);
                         subscribebtn.setText("구독취소");
                     }else{
-                        subscribebtn.setBackgroundColor(Color.DKGRAY);
+                        subscribebtn.setTextColor(Color.WHITE);
                         subscribebtn.setText("구독하기");
                     }
                     subscribebtn.setVisibility(View.VISIBLE);

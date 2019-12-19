@@ -5,6 +5,7 @@
     android:background="@color/BackGroundColor">
 
     <LinearLayout
+        android:id="@+id/signInform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -54,6 +55,7 @@
             android:layout_marginRight="30dp"
             android:textColor="#534837"
             android:textSize="15dp"
+            android:inputType="textPassword"
             android:hint="8~20자리의 영문 / 숫자"
             android:textColorHint="#9B8281"
             />
@@ -62,10 +64,14 @@
 
     <Button
         android:id="@+id/signInFinish"
+        android:background="@drawable/buttonshape"
+        android:layout_below="@id/signInform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:textSize="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="30dp"
         android:textColor="#534837"
         android:text="확 인"
         />

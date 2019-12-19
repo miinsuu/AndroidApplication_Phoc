@@ -26,7 +26,7 @@ public class SubscribeUserItem {
         this.title = obj.get("theme").getAsString();
         this.comment = obj.get("content").getAsString();
         this.userName = obj.get("nick").getAsString();
-        this.date = obj.get("createdAt").getAsString();
+        this.date = obj.get("createdAt").getAsString().split(" ",0)[0];
         this.imgUri = obj.get("img").getAsString();
         this.exifJsonString = obj.get("camera").getAsString();
         this.phocNum = obj.get("num_phoc").getAsInt();

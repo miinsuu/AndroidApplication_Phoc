@@ -22,7 +22,7 @@ public class UserFeedItem {
 
         this.title = obj.get("theme").getAsString();
         this.comment = obj.get("content").getAsString();
-        this.date = obj.get("createdAt").getAsString();
+        this.date = obj.get("createdAt").getAsString().split(" ",0)[0];
         this.exifJsonString = obj.get("camera").getAsString();
         this.imgUri = obj.get("img").getAsString();
         this.phocNum = obj.get("num_phoc").getAsInt();

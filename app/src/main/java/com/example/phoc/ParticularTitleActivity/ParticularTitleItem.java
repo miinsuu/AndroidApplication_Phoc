@@ -26,7 +26,7 @@ public class ParticularTitleItem {
 
         this.title = obj.get("theme").getAsString();
         this.comment = obj.get("content").getAsString();
-        this.date = obj.get("createdAt").getAsString();
+        this.date = obj.get("createdAt").getAsString().split(" ",0)[0];
         this.userName = obj.get("nick").getAsString();
         this.userId = obj.get("userId").getAsString();
         this.imgUrl = obj.get("img").getAsString();
