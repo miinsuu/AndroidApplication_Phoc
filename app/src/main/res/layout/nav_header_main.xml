@@ -19,7 +19,15 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textColor="#534837"
         android:fontFamily="@font/myeongjo"
-        android:text="어서오세요, 다시 오신것을 환영합니다!"
+        android:text="어서오세요,"
         android:textSize="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
+        android:text="다시 오신것을 환영합니다!"
+        android:textSize="17dp"/>
 
 </LinearLayout>
