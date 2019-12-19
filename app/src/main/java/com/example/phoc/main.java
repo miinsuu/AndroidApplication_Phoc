@@ -1,5 +1,6 @@
 package com.example.phoc;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
 import android.graphics.Typeface;
@@ -131,6 +132,9 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             onFragmentSelected(8, null);
         } else if(id == R.id.menu7) {
             //여기에 로그아웃하는 코드
+            MySession.getSession().clearSession();
+            Intent intent = new Intent(this, opening.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
