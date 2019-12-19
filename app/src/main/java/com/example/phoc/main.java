@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -95,6 +96,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         particularTitle = new ParticularTitle();
         userFeed = new UserFeed();
         subscribeUserList = new SubscribeUserList();
+
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, home).commit();
     }

@@ -28,6 +28,7 @@
 
             <Button
                 android:id="@+id/fromGalleryBtn"
+                android:background="@drawable/buttonshape"
                 android:layout_width="200dp"
                 android:layout_height="55dp"
                 android:text="갤러리에서 가져오기"
@@ -37,6 +38,7 @@
 
             <Button
                 android:id="@+id/takePhotoNowBtn"
+                android:background="@drawable/buttonshape"
                 android:layout_width="200dp"
                 android:layout_height="55dp"
                 android:text="지금 찍기"
