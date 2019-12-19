@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.phoc.DatabaseConnection.DataListener;
 import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.example.phoc.DatabaseConnection.MyOnSuccessListener;
 import com.example.phoc.MySession.MySession;
 import com.example.phoc.R;
 import com.example.phoc.SearchUserActivity.SearchUserItemAdapter;
@@ -48,8 +49,25 @@ public class SubscribeUser extends Fragment{
                     ((main) getActivity()).onFragmentSelected(6, bundle);
                 }
                 else if(viewType == 3) { //viewType3는 ImageButton인 phocBtn
-                    //phoc버튼 눌렀을 때 실행할 내용
-                    Toast.makeText(getActivity(), "phoc!", Toast.LENGTH_LONG).show();
+                    if(item.isPhoccedFlag){
+                        DatabaseQueryClass.Post.unPhocPost(item.postId, new MyOnSuccessListener() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(getActivity(), "unPhoc!", Toast.LENGTH_LONG).show();
+                                refreshFragement();
+
+                            }
+                        });
+                    } else {
+                        DatabaseQueryClass.Post.phocPost(item.postId, new MyOnSuccessListener() {
+                            @Override
+                            public void onSuccess() {
+                                Log.d("phocPost", "added");
+                                Toast.makeText(getActivity(), "phoc!", Toast.LENGTH_LONG).show();
+                                refreshFragement();
+                            }
+                        });
+                    }
                 }
             }
         }, getContext());
@@ -69,5 +87,9 @@ public class SubscribeUser extends Fragment{
     }
     void setAdapterToView(final SubscribeUserItemAdapter adapter){
         recyclerView.setAdapter(adapter);
+    }
+    void refreshFragement(){
+        androidx.fragment.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 }

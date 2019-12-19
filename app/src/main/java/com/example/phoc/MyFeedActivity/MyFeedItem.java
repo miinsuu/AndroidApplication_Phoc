@@ -26,6 +26,7 @@ public class MyFeedItem {
         this.Date = obj.get("createdAt").getAsString();
         this.imgUri = obj.get("img").getAsString();
         this.exifJsonString = obj.get("camera").getAsString();
+        this.phocNum = obj.get("num_phoc").getAsInt();
         this.postId = postId;
     }
 

@@ -92,6 +92,7 @@ public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.Vi
             title.setText(item.getTitle());
             comment.setText(item.getComment());
             date.setText(item.getDate());
+            phocNum.setText(Integer.toString(item.getPhocNum()));
             Log.d("Post", item.getImgUri());
             Uri uri = Uri.parse(item.getImgUri());
             Glide.with(context).load(uri).into(imgView);

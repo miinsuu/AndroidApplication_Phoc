@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phoc.DatabaseConnection.DataListener;
 import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.example.phoc.DatabaseConnection.MyOnSuccessListener;
 import com.example.phoc.R;
 import com.example.phoc.main;
 
@@ -42,8 +43,25 @@ public class UserFeed extends Fragment{
                     ((main) getActivity()).onFragmentSelected(6, bundle);
                 }
                 else if(viewType ==2) { //viewType2는 imageButton인 phocBtn
-                    //phoc버튼 눌렀을 때 실행할 내용
-                    Toast.makeText(getActivity(), "phoc!", Toast.LENGTH_LONG).show();
+                    if(item.isPhoccedFlag){
+                        DatabaseQueryClass.Post.unPhocPost(item.postId, new MyOnSuccessListener() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(getActivity(), "unPhoc!", Toast.LENGTH_LONG).show();
+                                refreshFragement();
+
+                            }
+                        });
+                    } else {
+                        DatabaseQueryClass.Post.phocPost(item.postId, new MyOnSuccessListener() {
+                            @Override
+                            public void onSuccess() {
+                                Log.d("phocPost", "added");
+                                Toast.makeText(getActivity(), "phoc!", Toast.LENGTH_LONG).show();
+                                refreshFragement();
+                            }
+                        });
+                    }
                 }
             }
         },getActivity());
@@ -56,8 +74,12 @@ public class UserFeed extends Fragment{
             }
         });
 
-
-
         return rootView;
+    }
+    void refreshFragement(){
+        androidx.fragment.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+        //getPostsFromDB();
+
     }
 }

@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -218,7 +219,65 @@ public class DatabaseQueryClass {
                         }
                     });
         }
+        public static void phocPost(String postId, final MyOnSuccessListener myOnSuccessListener){
+            Log.d("phocPost", "phocPost ccalled");
 
+            DocumentReference postRef = db.collection("posts").document(postId);
+            postRef.update("num_phoc", FieldValue.increment(1));
+
+            Map<String, Object> phocLog  = new HashMap<>();
+            phocLog.put("userId", MySession.getSession().getUserId());
+            phocLog.put("postId", postId);
+            Log.d("phocPost", phocLog.toString());
+
+            db.collection("phocs")
+                    .add(phocLog)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            myOnSuccessListener.onSuccess();
+                        }
+                    });
+        }
+        public static void unPhocPost(final String postId, final MyOnSuccessListener myOnSuccessListener) {
+            final CollectionReference phocsRef = db.collection("phocs");
+            phocsRef.whereEqualTo("userId", MySession.getSession().getUserId())
+                    .whereEqualTo("postId", postId)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            phocsRef.document(document.getId())
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            DocumentReference postRef = db.collection("posts").document(postId);
+                                            postRef.update("num_phoc", FieldValue.increment(-1));
+                                            myOnSuccessListener.onSuccess();
+                                        }
+                                    });
+                        }
+                    }
+                }
+            });
+        }
+        public static void isPhocced(String postId, final DataListener dataListener){
+            db.collection("phocs")
+                    .whereEqualTo("userId", MySession.getSession().getUserId())
+                    .whereEqualTo("postId", postId)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    boolean isPhoccedFlag = false;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        isPhoccedFlag = true;
+                    }
+                    dataListener.getData(isPhoccedFlag, null);
+                }
+            });
+        }
     }
     public static class User {
 
@@ -258,7 +317,6 @@ public class DatabaseQueryClass {
                 }
             });
         }
-
         public static void cancelSubscribe(String userId, String followingId) {
 
             db.collection("subscribe")
