@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@color/itemBackGroundColor"
     android:layout_marginBottom="20dp">
 
     <LinearLayout
@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="4dp"
+                android:textStyle="bold"
                 android:text="000"
                 android:layout_alignBottom="@+id/phocInSubscribeuser"
                 android:layout_alignRight="@+id/phocInSubscribeuser"/>

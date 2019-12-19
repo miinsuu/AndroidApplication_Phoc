@@ -47,7 +47,7 @@
             android:parentActivityName=".logIn" />
         <activity
             android:name=".main"
-            android:label="@string/title_activity_main"
+            android:label="오늘의 주제"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Gallery"

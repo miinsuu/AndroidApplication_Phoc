@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="@color/colorPrimary"
+    android:background="@color/itemBackGroundColor"
     android:layout_marginBottom="15dp">
 
     <TextView
@@ -10,18 +10,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="주제"
-        android:textSize="23dp"
+        android:textStyle="bold"
+        android:textSize="25dp"
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"/>
 
-    <Button
-        android:id="@+id/makeTitlePhotoBtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/camera_button"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true">
+        <Button
+            android:id="@+id/makeTitlePhotoBtn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/camera_button"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:text="작품 올리기"/>
+    </LinearLayout>
 
 
 </RelativeLayout>
