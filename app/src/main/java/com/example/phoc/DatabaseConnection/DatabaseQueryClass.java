@@ -100,7 +100,7 @@ public class DatabaseQueryClass {
         public static void getPostsByTheme(String theme, final DataListener dataListener){
             Log.d("Post", "byTheme called");
             CollectionReference postRef = db.collection("posts");
-            Query query = postRef.whereEqualTo("theme", theme);
+            Query query = postRef.whereEqualTo("theme", theme).orderBy("num_phoc", Direction.DESCENDING);
 
             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -120,7 +120,7 @@ public class DatabaseQueryClass {
         public static void getPostsByUserId(final String userId, final DataListener dataListener){
             Log.d("Post", "by userId called");
             CollectionReference postRef = db.collection("posts");
-            Query query = postRef.whereEqualTo("userId", userId);
+            Query query = postRef.whereEqualTo("userId", userId).orderBy("createdAt", Direction.DESCENDING);
             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -154,7 +154,7 @@ public class DatabaseQueryClass {
 
                             for (String element : followings) {
                                 Log.d("subsc", "e :" + element);
-                                postsRef.whereEqualTo("userId", element).get()
+                                postsRef.whereEqualTo("userId", element).orderBy("createdAt", Direction.DESCENDING).get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
