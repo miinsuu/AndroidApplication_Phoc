@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +52,12 @@ public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.Vi
                 onItemClickListener.onItemClick(items.get(position), 1);
             }
         });
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(items.get(position), 2);
+            }
+        });
         MyFeedItem item = items.get(position);
         viewHolder.setItem(item);
     }
@@ -65,6 +73,7 @@ public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.Vi
         TextView date;
         ImageView imgView;
         Context context;
+        ImageButton deleteBtn;
         TextView phocNum;
 
         public ViewHolder(View itemView, Context context) {
@@ -75,6 +84,7 @@ public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.Vi
             comment = itemView.findViewById(R.id.inMyFeedComment);
             date = itemView.findViewById(R.id.inMyFeedDate);
             imgView = itemView.findViewById(R.id.imgView);
+            deleteBtn = itemView.findViewById(R.id.deleteBtn);
             phocNum = itemView.findViewById(R.id.phocNumInMyfeed);
         }
 
@@ -82,6 +92,7 @@ public class MyFeedItemAdapter extends RecyclerView.Adapter<MyFeedItemAdapter.Vi
             title.setText(item.getTitle());
             comment.setText(item.getComment());
             date.setText(item.getDate());
+            phocNum.setText(Integer.toString(item.getPhocNum()));
             Log.d("Post", item.getImgUri());
             Uri uri = Uri.parse(item.getImgUri());
             Glide.with(context).load(uri).into(imgView);

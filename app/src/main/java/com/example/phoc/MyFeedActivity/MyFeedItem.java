@@ -13,7 +13,7 @@ public class MyFeedItem {
     public String Date;
     public String imgUri;
     public String exifJsonString;
-    public String phocNum;
+    public int phocNum;
 
     public MyFeedItem(String postId, String json) {
         JsonElement ele = new JsonParser().parse(json);
@@ -26,6 +26,7 @@ public class MyFeedItem {
         this.Date = obj.get("createdAt").getAsString();
         this.imgUri = obj.get("img").getAsString();
         this.exifJsonString = obj.get("camera").getAsString();
+        this.phocNum = obj.get("num_phoc").getAsInt();
         this.postId = postId;
     }
 
@@ -62,11 +63,11 @@ public class MyFeedItem {
 
     public String getPostId(){return this.postId;}
 
-    public String getPhocNum() {
+    public int getPhocNum() {
         return phocNum;
     }
 
-    public void setPhocNum(String phocNum) {
+    public void setPhocNum(int phocNum) {
         this.phocNum = phocNum;
     }
 }

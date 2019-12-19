@@ -10,13 +10,13 @@ public class ParticularTitleItem {
     String comment;
     String userName;
     String date;
-    String phocNum;
+    int phocNum;
     public String userId;
     public String imgUrl;
     String postId;
     public String exifJsonString;
     String title;
-
+    public boolean isPhoccedFlag = false;
 
     public ParticularTitleItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
@@ -31,6 +31,8 @@ public class ParticularTitleItem {
         this.userId = obj.get("userId").getAsString();
         this.imgUrl = obj.get("img").getAsString();
         this.exifJsonString = obj.get("camera").getAsString();
+        this.postId = id;
+        this.phocNum = obj.get("num_phoc").getAsInt();
     }
 
     public String getTitle() {
@@ -65,11 +67,11 @@ public class ParticularTitleItem {
         this.date = date;
     }
 
-    public String getPhocNum() {
+    public int getPhocNum() {
         return phocNum;
     }
 
-    public void setPhocNum(String phocNum) {
+    public void setPhocNum(int phocNum) {
         this.phocNum = phocNum;
     }
 }

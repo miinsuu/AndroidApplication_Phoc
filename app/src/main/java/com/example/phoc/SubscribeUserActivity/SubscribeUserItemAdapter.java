@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
 import com.example.phoc.MainActivity;
 import com.example.phoc.R;
 
@@ -109,6 +111,7 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
             date.setText(item.getDate());
             Uri uri = Uri.parse(item.getImgUri());
             Glide.with(context).load(uri).into(imgView);
+            phocNum.setText(Integer.toString(item.phocNum));
 
             exifBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,6 +120,21 @@ public class SubscribeUserItemAdapter extends RecyclerView.Adapter<SubscribeUser
                     intent.putExtra("titleName", item.getTitle());
                     intent.putExtra("exifJsonString", item.getExifJsonString());
                     context.startActivity(intent);
+                }
+            });
+
+            DatabaseQueryClass.Post.isPhocced(item.postId, new DataListener() {
+                @Override
+                public void getData(Object data, String id) {
+                    if((boolean)data){
+                        item.isPhoccedFlag = true;
+                        phocBtn.setImageResource(R.drawable.phocced);
+
+                    } else {
+                        item.isPhoccedFlag = false;
+                        phocBtn.setImageResource(R.drawable.phoc);
+                    }
+                    phocBtn.setScaleType(ImageButton.ScaleType.FIT_CENTER);
                 }
             });
         }

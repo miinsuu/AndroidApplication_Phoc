@@ -14,7 +14,9 @@ public class SubscribeUserItem {
     public String imgUri;
     public String userId;
     public String exifJsonString;
-    public String phocNum;
+    public int phocNum;
+    public String postId;
+    public boolean isPhoccedFlag = false;
 
     public SubscribeUserItem(String json, String id) {
         JsonElement ele = new JsonParser().parse(json);
@@ -27,6 +29,8 @@ public class SubscribeUserItem {
         this.date = obj.get("createdAt").getAsString();
         this.imgUri = obj.get("img").getAsString();
         this.exifJsonString = obj.get("camera").getAsString();
+        this.phocNum = obj.get("num_phoc").getAsInt();
+        this.postId = id;
     }
 
     public String getExifJsonString() {
@@ -67,11 +71,4 @@ public class SubscribeUserItem {
 
     public String getImgUri(){ return this.imgUri;}
 
-    public String getPhocNum() {
-        return phocNum;
-    }
-
-    public void setPhocNum(String phocNum) {
-        this.phocNum = phocNum;
-    }
 }

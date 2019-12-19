@@ -2,9 +2,11 @@ package com.example.phoc.ParticularTitleActivity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,11 +15,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.example.phoc.DatabaseConnection.MyOnSuccessListener;
 import com.example.phoc.MainActivity;
 import com.example.phoc.R;
 
 import java.util.ArrayList;
 import android.content.Context;
+import android.widget.Toast;
 
 public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitleAdapter.ViewHolder> {
     ArrayList<ParticularTitleItem> items = new ArrayList<ParticularTitleItem>();
@@ -97,6 +103,7 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
             comment.setText(item.getComment());
             userName.setText(item.getUserName());
             date.setText(item.getDate());
+            phocNum.setText(Integer.toString(item.phocNum));
             Uri uri = Uri.parse(item.imgUrl);
             Glide.with(context).load(uri).into(imgView);
 
@@ -109,9 +116,22 @@ public class ParticularTitleAdapter extends RecyclerView.Adapter<ParticularTitle
                     context.startActivity(intent);
                 }
             });
+
+            DatabaseQueryClass.Post.isPhocced(item.postId, new DataListener() {
+                @Override
+                public void getData(Object data, String id) {
+                    if((boolean)data){
+                        item.isPhoccedFlag = true;
+                        phocBtn.setImageResource(R.drawable.phocced);
+
+                    } else {
+                        item.isPhoccedFlag = false;
+                        phocBtn.setImageResource(R.drawable.phoc);
+                    }
+                    phocBtn.setScaleType(ImageButton.ScaleType.FIT_CENTER);
+                }
+            });
         }
-
-
     }
 
     public void addItem(ParticularTitleItem item){

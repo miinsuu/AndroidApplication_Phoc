@@ -1,6 +1,7 @@
 package com.example.phoc.DatabaseConnection;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -12,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -98,7 +100,7 @@ public class DatabaseQueryClass {
         public static void getPostsByTheme(String theme, final DataListener dataListener){
             Log.d("Post", "byTheme called");
             CollectionReference postRef = db.collection("posts");
-            Query query = postRef.whereEqualTo("theme", theme);
+            Query query = postRef.whereEqualTo("theme", theme).orderBy("num_phoc", Direction.DESCENDING);
 
             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -114,44 +116,11 @@ public class DatabaseQueryClass {
                 }
             });
         }
-        /*
-        public static void getPostsByNickname(String nickname, final DataListListener dataListener){
-            Log.d("Post", "by nick called");
-            findUserIdByNickname(nickname, new DataListener() {
-                @Override
-                public void getData(Object userId) {
-                    CollectionReference postRef = db.collection("posts");
-                    Query query = postRef.whereEqualTo("userId", userId);
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            ArrayList<JsonObject> dataList = new ArrayList<JsonObject>();
-
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("Post", document.getId() + " => " + document.getData());
-
-                                    String json = new Gson().toJson(document.getData());
-                                    JsonElement element = new JsonParser().parse(json);
-                                    JsonObject jobj = element.getAsJsonObject();
-
-                                    dataList.add(jobj);
-                                }
-                                dataListener.getData(dataList, document.getId());
-                            } else {
-                                Log.d("Post", "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
-                }
-            });
-        }
-        */
         public static void getPostsByUserId(final String userId, final DataListener dataListener){
             Log.d("Post", "by userId called");
             CollectionReference postRef = db.collection("posts");
-            Query query = postRef.whereEqualTo("userId", userId);
+            Query query = postRef.whereEqualTo("userId", userId).orderBy("createdAt", Direction.DESCENDING);
             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -168,24 +137,24 @@ public class DatabaseQueryClass {
             });
         }
 
-        public static void getPostBySubscribing(String follower, final DataListener dataListener){
+        public static void getPostBySubscribing(String follower, final DataListener dataListener) {
             Log.d("subsc", follower.toString());
             db.collection("subscribe").whereEqualTo("followerId", follower)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            Log.d("subsc" , "onCompleete called");
+                            Log.d("subsc", "onCompleete called");
                             ArrayList<String> followings = new ArrayList<String>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 followings.add(document.getData().get("followingId").toString());
                             }
-                            Log.d("subsc" , followings.toString());
+                            Log.d("subsc", followings.toString());
                             CollectionReference postsRef = db.collection("posts");
 
-                            for(String element : followings){
+                            for (String element : followings) {
                                 Log.d("subsc", "e :" + element);
-                                postsRef.whereEqualTo("userId", element).get()
+                                postsRef.whereEqualTo("userId", element).orderBy("createdAt", Direction.DESCENDING).get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -203,7 +172,7 @@ public class DatabaseQueryClass {
         public static void createPost(final String cameraSettingJson,
                                       final String content,
                                       final String imgUrl,
-                                      final String theme)
+                                      final String theme, final MyOnSuccessListener myOnSuccessListener)
         {
             Map<String, Object> post  = new HashMap<>();
             post.put("camera", cameraSettingJson);
@@ -214,27 +183,104 @@ public class DatabaseQueryClass {
             post.put("num_phoc", 0);
             post.put("userId", MySession.getSession().getUserId());
             post.put("nick", MySession.getSession().getUserNick());
-            //userId 추가할것
+
+            Log.d("uploadd", post.toString());
 
             db.collection("posts")
                     .add(post)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            Log.d("Post", "DocumentSnapshot added with ID: " + documentReference.getId());
+                            Log.d("uploadd", "create post upload success " + documentReference.getId());
+                            myOnSuccessListener.onSuccess();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w("Post", "Error adding document", e);
+                            Log.w("uploadd", "Error adding document", e);
                         }
                     });
         }
+        public static void deletePost(String postId, final MyOnSuccessListener myOnSuccessListener){
+            db.collection("posts").document(postId)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("del", "DocumentSnapshot successfully deleted!");
+                            myOnSuccessListener.onSuccess();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("del", "Error deleting document", e);
+                        }
+                    });
+        }
+        public static void phocPost(String postId, final MyOnSuccessListener myOnSuccessListener){
+            Log.d("phocPost", "phocPost ccalled");
 
+            DocumentReference postRef = db.collection("posts").document(postId);
+            postRef.update("num_phoc", FieldValue.increment(1));
 
+            Map<String, Object> phocLog  = new HashMap<>();
+            phocLog.put("userId", MySession.getSession().getUserId());
+            phocLog.put("postId", postId);
+            Log.d("phocPost", phocLog.toString());
+
+            db.collection("phocs")
+                    .add(phocLog)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            myOnSuccessListener.onSuccess();
+                        }
+                    });
+        }
+        public static void unPhocPost(final String postId, final MyOnSuccessListener myOnSuccessListener) {
+            final CollectionReference phocsRef = db.collection("phocs");
+            phocsRef.whereEqualTo("userId", MySession.getSession().getUserId())
+                    .whereEqualTo("postId", postId)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            phocsRef.document(document.getId())
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            DocumentReference postRef = db.collection("posts").document(postId);
+                                            postRef.update("num_phoc", FieldValue.increment(-1));
+                                            myOnSuccessListener.onSuccess();
+                                        }
+                                    });
+                        }
+                    }
+                }
+            });
+        }
+        public static void isPhocced(String postId, final DataListener dataListener){
+            db.collection("phocs")
+                    .whereEqualTo("userId", MySession.getSession().getUserId())
+                    .whereEqualTo("postId", postId)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    boolean isPhoccedFlag = false;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        isPhoccedFlag = true;
+                    }
+                    dataListener.getData(isPhoccedFlag, null);
+                }
+            });
+        }
     }
     public static class User {
+
         public static void subscribe(String userId, String followingId) {
             Map<String, Object> subscribing = new HashMap<>();
             subscribing.put("followerId", userId);
@@ -256,7 +302,21 @@ public class DatabaseQueryClass {
                         }
                     });
         }
-
+        public static void isSubscribed(String userId, final DataListener dataListener){
+            db.collection("subscribe")
+                    .whereEqualTo("followerId", MySession.getSession().getUserId())
+                    .whereEqualTo("followingId", userId)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    boolean isSubscrieflag = false;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        isSubscrieflag = true;
+                    }
+                    dataListener.getData(isSubscrieflag, null);
+                }
+            });
+        }
         public static void cancelSubscribe(String userId, String followingId) {
 
             db.collection("subscribe")
@@ -358,9 +418,6 @@ public class DatabaseQueryClass {
                             }
                         }
                     });
-
-        }
-        private static void findNicknameByUserId(String userId, final DataListener dataListener){
 
         }
     }

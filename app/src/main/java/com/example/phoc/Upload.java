@@ -10,19 +10,28 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import static android.media.ExifInterface.TAG_EXPOSURE_TIME;
 import static android.media.ExifInterface.TAG_FLASH;
 import static android.media.ExifInterface.TAG_ISO_SPEED_RATINGS;
+
+import com.bumptech.glide.Glide;
 import com.example.phoc.DatabaseConnection.DataListener;
 import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.example.phoc.DatabaseConnection.MyOnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 public class Upload extends AppCompatActivity implements View.OnClickListener{
@@ -34,7 +43,7 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     String exifJson;
     ExifInterface exif;
     String titleName;
-
+    EditText contentText;
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://phoc-50746.appspot.com");
 
     @Override
@@ -61,12 +70,16 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
         titleNameText = (TextView)findViewById(R.id.themeText);
         titleNameText.setText("#"+titleName);
 
+        contentText = findViewById(R.id.infoText);
+
         //URI로 화면에 사진 뿌리기
         upload_image = (ImageView) findViewById(R.id.upload_image);
         upload_image.setImageURI(selectedImageUri);
 
         //exif값을 JSON포맷으로 String변수에 저장
         makeExif();
+
+
 
 //        Bitmap bm = Images.Media.getBitmap(getContentResolver(), selectedImageUri);
 //        imgView.setImageBitmap(bm);
@@ -112,7 +125,8 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v == upload){
-           // DatabaseQueryClass.Post.createPost();
+            Log.d("upload", selectedImageUri.toString());
+            //DatabaseQueryClass.Post.createPost(exifJson, contentText.getText(), )
             /*
             final String cameraSettingJson,
             final String content,
@@ -120,9 +134,46 @@ public class Upload extends AppCompatActivity implements View.OnClickListener{
             final String theme)
 
              */
-            startActivity(new Intent(this, main.class));
+            FirebaseStorage storage = FirebaseStorage.getInstance("gs://phoc-50746.appspot.com");
+            final StorageReference storageRef = storage.getReference();
+            StorageReference riverRef = storageRef.child("images/" + selectedImageUri.getLastPathSegment());
+            UploadTask uploadTask = riverRef.putFile(selectedImageUri);
 
-            finish();
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("uploadd", e.toString());
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d("uploadd", taskSnapshot.getMetadata().toString());
+                    StorageReference imageRef = storageRef.child("images/" + selectedImageUri.getLastPathSegment());
+
+                    imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Log.d("uploadd", uri.toString());
+                            DatabaseQueryClass.Post.createPost(exifJson, contentText.getText().toString(), uri.toString(), titleName, new MyOnSuccessListener() {
+                                @Override
+                                public void onSuccess() {
+                                    goToMain();
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                        }
+                    });
+                }
+            });
+
         }
+
+    }
+    private void goToMain(){
+        startActivity(new Intent(this, main.class));
+        finish();
     }
 }
