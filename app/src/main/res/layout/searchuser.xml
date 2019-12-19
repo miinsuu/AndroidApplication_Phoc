@@ -51,7 +51,7 @@
                     android:maxWidth="50dp"
                     android:maxHeight="50dp"
                     android:adjustViewBounds="true"
-                    android:background="#3F51B5" />
+                    android:src="@drawable/search" />
 
             </LinearLayout>
 
