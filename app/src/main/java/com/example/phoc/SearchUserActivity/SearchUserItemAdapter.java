@@ -16,7 +16,7 @@ interface  OnSearchUserItemClickListener{
     public void onItemClick(SearchUserItemAdapter.ViewHolder holder, View view, int position);
 }
 public class SearchUserItemAdapter extends RecyclerView.Adapter<SearchUserItemAdapter.ViewHolder> implements OnSearchUserItemClickListener{
-    ArrayList<SearchUserItem> items = new ArrayList<SearchUserItem>();
+    public ArrayList<SearchUserItem> items = new ArrayList<SearchUserItem>();
     OnSearchUserItemClickListener listener;
 
     @NonNull

@@ -1,28 +1,37 @@
 package com.example.phoc.UserFeedActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.phoc.DatabaseConnection.DataListener;
+import com.example.phoc.DatabaseConnection.DatabaseQueryClass;
+import com.example.phoc.MainActivity;
 import com.example.phoc.R;
 
 import java.util.ArrayList;
 
 public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapter.ViewHolder>{
     ArrayList<UserFeedItem> items = new ArrayList<UserFeedItem>();
-
+    Context context;
     public interface OnItemClickListener{
-        public  void onItemClick(View view, int position, int type);
+        public  void onItemClick(UserFeedItem item, int type);
     }
 
     private OnItemClickListener onItemClickListener;
 
-    public UserFeedItemAdapter(OnItemClickListener onItemClickListener){
+    public UserFeedItemAdapter(OnItemClickListener onItemClickListener, Context context){
         this.onItemClickListener = onItemClickListener;
+        this.context = context;
     }
 
     @NonNull
@@ -31,7 +40,7 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.userfeed_item, viewGroup, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, this.context);
     }
 
     @Override
@@ -41,7 +50,14 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
             @Override
             public void onClick(View v) {
                 //viewType1은 TextView인 title
-                onItemClickListener.onItemClick(v, position, 1);
+                onItemClickListener.onItemClick(items.get(position), 1);
+            }
+        });
+        holder.phocBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //viewType2는 imageButton인 phocBtn
+                onItemClickListener.onItemClick(items.get(position), 2);
             }
         });
 
@@ -58,19 +74,55 @@ public class UserFeedItemAdapter extends RecyclerView.Adapter<UserFeedItemAdapte
         TextView title;
         TextView comment;
         TextView date;
+        Context context;
+        ImageView imgView;
+        ImageButton exifBtn;
+        ImageButton phocBtn;
+        TextView phocNum;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-
+            this.context = context;
             title = itemView.findViewById(R.id.fromUserFeed2ParticularTitle);
             comment = itemView.findViewById(R.id.inUserFeedComment);
             date = itemView.findViewById(R.id.inUserFeedDate);
+            imgView = itemView.findViewById(R.id.imgView);
+            exifBtn = itemView.findViewById(R.id.userfeedExifSmallBtn);
+            phocBtn = itemView.findViewById(R.id.phocInUserfeed);
+            phocNum = itemView.findViewById(R.id.phocNumInUserfeed);
         }
 
-        public void setItem(UserFeedItem item){
+        public void setItem(final UserFeedItem item){
             title.setText(item.getTitle());
             comment.setText(item.getComment());
             date.setText(item.getDate());
+            Uri uri = Uri.parse(item.imgUri);
+            Glide.with(context).load(uri).into(imgView);
+            phocNum.setText(Integer.toString(item.phocNum));
+            exifBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra("titleName", item.getTitle());
+                    intent.putExtra("exifJsonString", item.getExifJsonString());
+                    context.startActivity(intent);
+                }
+            });
+
+            DatabaseQueryClass.Post.isPhocced(item.postId, new DataListener() {
+                @Override
+                public void getData(Object data, String id) {
+                    if((boolean)data){
+                        item.isPhoccedFlag = true;
+                        phocBtn.setImageResource(R.drawable.phocced);
+
+                    } else {
+                        item.isPhoccedFlag = false;
+                        phocBtn.setImageResource(R.drawable.phoc);
+                    }
+                    phocBtn.setScaleType(ImageButton.ScaleType.FIT_CENTER);
+                }
+            });
         }
     }
 

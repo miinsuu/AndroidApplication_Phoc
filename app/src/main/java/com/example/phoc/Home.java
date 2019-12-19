@@ -22,6 +22,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
     Button fromHome2MakeFeedBtn;
     TextView todayTheme;
+    String titleName;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,16 +32,20 @@ public class Home extends Fragment implements View.OnClickListener {
         todayTheme = rootView.findViewById((R.id.todayTheme));
 
         fromHome2MakeFeedBtn.setOnClickListener(this);
+        todayTheme.setOnClickListener(this);
 
         DatabaseQueryClass.Theme.getTodayTheme(new DataListener() {
             @Override
-            public void getData(Object data) {
+            public void getData(Object data, String id) {
                 String json = new Gson().toJson(data);
                 JsonElement element = new JsonParser().parse(json);
                 JsonObject jobj = element.getAsJsonObject();
 
                 String name = element.getAsJsonObject().get("name").getAsString();
                 todayTheme.setText(jobj.get("name").toString());
+                titleName = jobj.get("name").toString();
+                int lastPoint = titleName.length();
+                titleName = titleName.substring(1, lastPoint-1);
             }
         });
 
@@ -50,6 +55,14 @@ public class Home extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        ((main)getActivity()).onFragmentSelected(5,null);
+        Bundle bundle = new Bundle();
+        if(v==fromHome2MakeFeedBtn) {
+            bundle.putString("titleName", titleName);
+            ((main) getActivity()).onFragmentSelected(5, bundle);
+        }
+        else if(v==todayTheme) {
+            bundle.putString("theme", titleName);
+            ((main) getActivity()).onFragmentSelected(6, bundle);
+        }
     }
 }

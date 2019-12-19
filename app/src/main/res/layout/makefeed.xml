@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MakeFeed">
+    tools:context=".MakeFeed"
+    android:background="@color/BackGroundColor">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,10 +16,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/titleName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:textStyle="bold"
+                android:textColor="#534837"
+                android:fontFamily="@font/myeongjo"
+                android:textSize="30dp"
+                android:layout_marginBottom="70dp"
+                android:visibility="gone"/>
+
             <Button
                 android:id="@+id/fromGalleryBtn"
+                android:background="@drawable/buttonshape"
                 android:layout_width="200dp"
                 android:layout_height="55dp"
+                android:textColor="#534837"
+                android:fontFamily="@font/myeongjo"
                 android:text="갤러리에서 가져오기"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical|center_horizontal"
@@ -26,8 +42,11 @@
 
             <Button
                 android:id="@+id/takePhotoNowBtn"
+                android:background="@drawable/buttonshape"
                 android:layout_width="200dp"
                 android:layout_height="55dp"
+                android:textColor="#534837"
+                android:fontFamily="@font/myeongjo"
                 android:text="지금 찍기"
                 android:textStyle="bold"
                 android:layout_marginTop="70dp"

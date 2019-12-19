@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#4CAF50"
+    android:background="@color/itemBackGroundColor"
     android:layout_marginBottom="20dp">
 
     <LinearLayout
@@ -13,30 +13,47 @@
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:gravity="right">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/phocInSubscribeuser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/phocbtnbefore"/>
+            <TextView
+                android:id="@+id/phocNumInSubscribeuser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:textStyle="bold"
+                android:text="000"
+                android:layout_alignBottom="@+id/phocInSubscribeuser"
+                android:layout_alignRight="@+id/phocInSubscribeuser"/>
+        </RelativeLayout>
+
         <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="#3F51B5"/>
-        <ImageButton
+            android:id="@+id/subscribeuserExifSmallBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="#3F51B5"/>
+            android:background="@drawable/camera_button"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/imgView"
-        android:layout_width="360dp"
-        android:layout_height="360dp"
+        android:layout_width="355dp"
+        android:layout_height="355dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#3F51B5"/>
+        android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/fromSubscribeUser2ParticularTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:text="#주제"
         android:textSize="24dp" />
     <TextView
@@ -44,6 +61,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:text="짧은 한줄의 작품 소개"
         android:textSize="17dp" />
     <LinearLayout
@@ -56,6 +75,8 @@
             android:id="@+id/fromSubscribeUser2UserFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="작가이름"
             android:textSize="15dp"
             />
@@ -64,6 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="2019.10.09"
             android:textSize="15dp"
             android:layout_marginLeft="20dp"/>

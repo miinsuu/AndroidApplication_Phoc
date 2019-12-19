@@ -1,15 +1,35 @@
 package com.example.phoc.UserFeedActivity;
 
-public class UserFeedItem {
-    String title;
-    String comment;
-    String date;
+import android.util.Log;
 
-    public UserFeedItem(String title, String comment, String date) {
-        this.title = title;
-        this.comment = comment;
-        this.date = date;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class UserFeedItem {
+    public String title;
+    public String comment;
+    public String date;
+    public String exifJsonString;
+    public String imgUri;
+    public int phocNum;
+    public String postId;
+    public boolean isPhoccedFlag = false;
+
+    public UserFeedItem(String json, String id) {
+        JsonElement ele = new JsonParser().parse(json);
+        JsonObject obj = ele.getAsJsonObject();
+
+        this.title = obj.get("theme").getAsString();
+        this.comment = obj.get("content").getAsString();
+        this.date = obj.get("createdAt").getAsString().split(" ",0)[0];
+        this.exifJsonString = obj.get("camera").getAsString();
+        this.imgUri = obj.get("img").getAsString();
+        this.phocNum = obj.get("num_phoc").getAsInt();
+        this.postId = id;
     }
+
+    public String getExifJsonString() { return exifJsonString; }
 
     public String getTitle() {
         return title;
@@ -34,4 +54,5 @@ public class UserFeedItem {
     public void setDate(String date) {
         this.date = date;
     }
+
 }

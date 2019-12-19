@@ -1,16 +1,33 @@
 package com.example.phoc.MyFeedActivity;
 
-public class MyFeedItem {
-    String title;
-    String Comment;
-    String Date;
-    String imgUri;
+import android.util.Log;
 
-    public MyFeedItem(String title, String comment, String date, String imgUri) {
-        this.title = title;
-        this.Comment = comment;
-        this.Date = date;
-        this.imgUri = imgUri;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class MyFeedItem {
+    public String postId;
+    public String title;
+    public String Comment;
+    public String Date;
+    public String imgUri;
+    public String exifJsonString;
+    public int phocNum;
+
+    public MyFeedItem(String postId, String json) {
+        JsonElement ele = new JsonParser().parse(json);
+        JsonObject obj = ele.getAsJsonObject();
+        Log.d("Post", obj.toString());
+
+
+        this.title = obj.get("theme").getAsString();;
+        this.Comment = obj.get("content").getAsString();
+        this.Date = obj.get("createdAt").getAsString().split(" ",0)[0];
+        this.imgUri = obj.get("img").getAsString();
+        this.exifJsonString = obj.get("camera").getAsString();
+        this.phocNum = obj.get("num_phoc").getAsInt();
+        this.postId = postId;
     }
 
     public String getTitle() {
@@ -44,4 +61,13 @@ public class MyFeedItem {
         return this.imgUri;
     }
 
+    public String getPostId(){return this.postId;}
+
+    public int getPhocNum() {
+        return phocNum;
+    }
+
+    public void setPhocNum(int phocNum) {
+        this.phocNum = phocNum;
+    }
 }

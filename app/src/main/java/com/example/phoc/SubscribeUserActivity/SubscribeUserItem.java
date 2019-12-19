@@ -1,18 +1,40 @@
 package com.example.phoc.SubscribeUserActivity;
 
-public class SubscribeUserItem {
-    String title;
-    String comment;
-    String userName;
-    String date;
-    String imgUri;
+import android.util.Log;
 
-    public SubscribeUserItem(String title, String comment, String userName, String date, String imgUri) {
-        this.title = title;
-        this.comment = comment;
-        this.userName = userName;
-        this.date = date;
-        this.imgUri = imgUri;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class SubscribeUserItem {
+    public String title;
+    public String comment;
+    public String userName;
+    public String date;
+    public String imgUri;
+    public String userId;
+    public String exifJsonString;
+    public int phocNum;
+    public String postId;
+    public boolean isPhoccedFlag = false;
+
+    public SubscribeUserItem(String json, String id) {
+        JsonElement ele = new JsonParser().parse(json);
+        JsonObject obj = ele.getAsJsonObject();
+
+        this.userId = obj.get("userId").getAsString();
+        this.title = obj.get("theme").getAsString();
+        this.comment = obj.get("content").getAsString();
+        this.userName = obj.get("nick").getAsString();
+        this.date = obj.get("createdAt").getAsString().split(" ",0)[0];
+        this.imgUri = obj.get("img").getAsString();
+        this.exifJsonString = obj.get("camera").getAsString();
+        this.phocNum = obj.get("num_phoc").getAsInt();
+        this.postId = id;
+    }
+
+    public String getExifJsonString() {
+        return exifJsonString;
     }
 
     public String getTitle() {
