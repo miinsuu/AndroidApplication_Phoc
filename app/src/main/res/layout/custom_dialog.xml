@@ -11,6 +11,7 @@
         android:gravity="center"
         android:textColor="#FFFFFF"
         android:textSize="16dp"
+        android:fontFamily="@font/myeongjo"
         android:text="이 설정을 뭐라고 저장하시겠어요?"
         android:background="#000000"/>
 
@@ -27,6 +28,7 @@
         android:textColor="#FFFFFF"
         android:textSize="16dp"
         android:textColorHint="#FFFFFF"
+        android:fontFamily="@font/myeongjo"
         android:hint="설정 이름을 입력하세요."/>
     <View
         android:layout_width="match_parent"
@@ -44,6 +46,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:fontFamily="@font/myeongjo"
             android:text="취소"
             android:textColor="#FFFFFF"
             android:textSize="16dp"
@@ -60,6 +63,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:fontFamily="@font/myeongjo"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textSize="16dp"

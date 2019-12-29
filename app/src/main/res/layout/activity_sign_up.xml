@@ -5,6 +5,7 @@
     android:background="@color/BackGroundColor">
 
     <LinearLayout
+        android:id="@+id/signUpform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,6 +18,8 @@
             android:layout_marginRight="30dp"
             android:textSize="20dp"
             android:textColor="#534837"
+            android:textStyle="bold"
+            android:fontFamily="@font/myeongjo"
             android:text="작가명"
             />
 
@@ -28,6 +31,8 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
+            android:inputType="text"
             android:textSize="15dp"
             android:hint="당신을 어떻게 부르면 될까요?"
             android:textColorHint="#9B8281"
@@ -41,6 +46,8 @@
             android:layout_marginRight="30dp"
             android:textSize="20dp"
             android:textColor="#534837"
+            android:textStyle="bold"
+            android:fontFamily="@font/myeongjo"
             android:text="이메일"
             />
 
@@ -52,6 +59,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:textSize="15dp"
             android:inputType="textEmailAddress"
             android:hint="이메일 주소를 입력하여 주세요."
@@ -65,6 +73,8 @@
             android:layout_marginRight="30dp"
             android:textSize="20dp"
             android:textColor="#534837"
+            android:textStyle="bold"
+            android:fontFamily="@font/myeongjo"
             android:text="비밀번호"
             />
 
@@ -76,6 +86,8 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
+            android:inputType="text"
             android:textSize="15dp"
             android:hint="8~20자리의 영문 / 숫자"
             android:textColorHint="#9B8281"
@@ -87,11 +99,17 @@
 
     <Button
         android:id="@+id/signUpFinish"
+        android:background="@drawable/buttonshape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:textSize="35dp"
+        android:layout_below="@id/signUpform"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="27dp"
+        android:textStyle="bold"
         android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:text="확 인"
         />
 

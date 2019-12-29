@@ -1,11 +1,16 @@
 package com.example.phoc;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
+import android.graphics.Typeface;
+import android.graphics.fonts.FontFamily;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,13 +68,13 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
                 if(subscribebtn.getText().toString() == "구독하기"){
                     Toast myToast = Toast.makeText(getApplicationContext(),"구독 완료!", Toast.LENGTH_SHORT);
                     myToast.show();
-                    subscribebtn.setBackgroundColor(Color.RED);
+                    subscribebtn.setTextColor(Color.RED);
                     subscribebtn.setText("구독취소");
                     DatabaseQueryClass.User.subscribe(MySession.getSession().getUserId(), userId);
                 }else {
                     Toast myToast = Toast.makeText(getApplicationContext(),"구독 취소!", Toast.LENGTH_SHORT);
                     myToast.show();
-                    subscribebtn.setBackgroundColor(Color.DKGRAY);
+                    subscribebtn.setTextColor(Color.WHITE);
                     subscribebtn.setText("구독하기");
                     DatabaseQueryClass.User.cancelSubscribe(MySession.getSession().getUserId(), userId);
                 }
@@ -94,6 +99,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
         particularTitle = new ParticularTitle();
         userFeed = new UserFeed();
         subscribeUserList = new SubscribeUserList();
+
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, home).commit();
     }
@@ -124,6 +130,11 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             onFragmentSelected(4, null);
         } else if(id == R.id.menu6) {
             onFragmentSelected(8, null);
+        } else if(id == R.id.menu7) {
+            //여기에 로그아웃하는 코드
+            MySession.getSession().clearSession();
+            Intent intent = new Intent(this, opening.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -175,10 +186,10 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
                 public void getData(Object data, String id) {
                     boolean flag = (boolean)data;
                     if(flag){
-                        subscribebtn.setBackgroundColor(Color.RED);
+                        subscribebtn.setTextColor(Color.RED);
                         subscribebtn.setText("구독취소");
                     }else{
-                        subscribebtn.setBackgroundColor(Color.DKGRAY);
+                        subscribebtn.setTextColor(Color.WHITE);
                         subscribebtn.setText("구독하기");
                     }
                     subscribebtn.setVisibility(View.VISIBLE);
@@ -186,7 +197,7 @@ public class main extends AppCompatActivity implements NavigationView.OnNavigati
             });
         } else if(position == 8) {
             curFragment = subscribeUserList;
-            toolbar.setTitle("구독중인 유저들");
+            toolbar.setTitle("구독중인 작가들");
             subscribebtn.setVisibility(View.GONE);
         }
         if(bundle != null){

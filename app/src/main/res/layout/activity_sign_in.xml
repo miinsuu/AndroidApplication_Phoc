@@ -5,6 +5,7 @@
     android:background="@color/BackGroundColor">
 
     <LinearLayout
+        android:id="@+id/signInform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,7 +18,9 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textSize="20dp"
+            android:textStyle="bold"
             android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="이메일"
             />
 
@@ -31,6 +34,7 @@
             android:textColor="#534837"
             android:textSize="15dp"
             android:inputType="textEmailAddress"
+            android:fontFamily="@font/myeongjo"
             android:hint="등록하신 이메일 주소를 입력하여 주세요."
             android:textColorHint="#9B8281"
             />
@@ -41,7 +45,9 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:textSize="20dp"
+            android:textStyle="bold"
             android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="비밀번호"
             />
 
@@ -54,6 +60,8 @@
             android:layout_marginRight="30dp"
             android:textColor="#534837"
             android:textSize="15dp"
+            android:inputType="textPassword"
+            android:fontFamily="@font/myeongjo"
             android:hint="8~20자리의 영문 / 숫자"
             android:textColorHint="#9B8281"
             />
@@ -62,11 +70,16 @@
 
     <Button
         android:id="@+id/signInFinish"
+        android:background="@drawable/buttonshape"
+        android:layout_below="@id/signInform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:textSize="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="27dp"
         android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:text="확 인"
         />
 

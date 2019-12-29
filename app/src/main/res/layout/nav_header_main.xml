@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDark"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -17,13 +17,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/nav_header_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
+        android:text="어서오세요,"
+        android:textSize="20dp"/>
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_subtitle" />
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
+        android:text="다시 오신것을 환영합니다!"
+        android:textSize="17dp"/>
 
 </LinearLayout>

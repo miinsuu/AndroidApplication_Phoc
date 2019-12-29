@@ -27,6 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="#주제"
             android:textSize="30dp"
             android:textAlignment="center" />
@@ -36,6 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:inputType="text"
             android:hint="짧게 작품 소개를 해주세요"
             android:textAlignment="center"
@@ -47,6 +51,9 @@
 
     <Button
         android:id="@+id/uploadBtn"
+        android:background="@drawable/buttonshape"
+        android:textColor="#534837"
+        android:fontFamily="@font/myeongjo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

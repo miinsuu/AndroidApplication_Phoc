@@ -85,7 +85,5 @@ public class Myfeed extends Fragment{
     void refreshFragement(){
         androidx.fragment.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-        getPostsFromDB();
-
     }
 }

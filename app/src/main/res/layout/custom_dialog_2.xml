@@ -10,6 +10,7 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:textColor="#FFFFFF"
+        android:fontFamily="@font/myeongjo"
         android:text="NAME"
         android:textSize="20dp"
         android:background="#000000"/>
@@ -24,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
+        android:fontFamily="@font/myeongjo"
         android:text="맞습니까?"
         android:textColor="#FFFFFF"
         android:textSize="20dp"/>
@@ -42,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
+            android:fontFamily="@font/myeongjo"
             android:gravity="center"
             android:text="취소"
             android:textColor="#FFFFFF"
@@ -59,6 +62,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:fontFamily="@font/myeongjo"
             android:text="확인"
             android:textColor="#FFFFFF"
             android:textSize="16dp"

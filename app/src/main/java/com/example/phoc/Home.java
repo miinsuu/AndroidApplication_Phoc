@@ -32,6 +32,7 @@ public class Home extends Fragment implements View.OnClickListener {
         todayTheme = rootView.findViewById((R.id.todayTheme));
 
         fromHome2MakeFeedBtn.setOnClickListener(this);
+        todayTheme.setOnClickListener(this);
 
         DatabaseQueryClass.Theme.getTodayTheme(new DataListener() {
             @Override
@@ -55,7 +56,13 @@ public class Home extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
-        bundle.putString("titleName", titleName);
-        ((main)getActivity()).onFragmentSelected(5,bundle);
+        if(v==fromHome2MakeFeedBtn) {
+            bundle.putString("titleName", titleName);
+            ((main) getActivity()).onFragmentSelected(5, bundle);
+        }
+        else if(v==todayTheme) {
+            bundle.putString("theme", titleName);
+            ((main) getActivity()).onFragmentSelected(6, bundle);
+        }
     }
 }

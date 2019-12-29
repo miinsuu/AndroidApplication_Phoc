@@ -19,6 +19,7 @@
             android:textSize="30dp"
             android:textStyle="bold"
             android:textColor="#534837"
+            android:fontFamily="@font/myeongjo"
             android:text="오늘의 주제"/>
 
         <Button
